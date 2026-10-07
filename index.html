@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+  <div class="particles p1" aria-hidden="true"></div>
+  <div class="particles p2" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="wrap">
       <p class="eyebrow">bennessism / dailyzodiac</p>
@@ -22,6 +25,16 @@
       <span>Ephemeris positions are astronomical data; zodiac interpretations are traditional astrology content, not fact or fate.</span>
     </section>
 
+    <section class="panel selector-panel">
+      <p class="eyebrow">Start here</p>
+      <h2>Choose Your Sign</h2>
+      <p class="muted">Tap a golden zodiac symbol to open its fixed profile and today’s reading.</p>
+      <div class="wheel-wrap">
+        <div id="zodiac-wheel" class="zodiac-wheel" aria-label="Zodiac sign selector"></div>
+        <div class="wheel-center"><small>Daily</small><strong>Zodiac</strong></div>
+      </div>
+    </section>
+
     <section class="panel">
       <div class="section-head">
         <div>
@@ -32,30 +45,47 @@
       </div>
       <div id="engine-status" class="status">Loading ephemeris…</div>
       <div id="sky-grid" class="sky-grid"></div>
-      <div id="aspect-list" class="aspect-list"></div>
     </section>
 
-    <section class="panel">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">General Sun-sign reading</p>
-          <h2>Choose your sign</h2>
-        </div>
-      </div>
-      <div id="sign-grid" class="sign-grid"></div>
-    </section>
-
-    <section id="reading" class="panel reading" hidden>
+    <section id="fixed-info" class="panel" hidden>
       <div class="reading-head">
         <div>
-          <p class="eyebrow">Daily Zodiac</p>
+          <p class="eyebrow">Section 1 · Fixed Info</p>
+          <h2 id="fixed-title"></h2>
+          <p class="muted">Core sign profile</p>
+        </div>
+        <div id="fixed-symbol" class="big-symbol"></div>
+      </div>
+      <div class="fixed-grid">
+        <article class="info-card"><h3>Profile</h3><p id="fixed-profile"></p></article>
+        <article class="info-card"><h3>Strength</h3><p id="fixed-strength"></p></article>
+        <article class="info-card"><h3>Challenge</h3><p id="fixed-challenge"></p></article>
+        <article class="info-card"><h3>Basics</h3><p id="fixed-basics"></p></article>
+      </div>
+    </section>
+
+    <section id="reading" class="panel" hidden>
+      <div class="reading-head">
+        <div>
+          <p class="eyebrow">Section 2 · Daily Info</p>
           <h2 id="reading-title"></h2>
           <p id="reading-subtitle" class="muted"></p>
         </div>
-        <div id="sign-symbol" class="big-symbol" aria-hidden="true"></div>
+        <div id="sign-symbol" class="big-symbol"></div>
       </div>
       <div id="theme-grid" class="theme-grid"></div>
-      <div id="reading-aspects" class="reading-aspects"></div>
+    </section>
+
+    <section id="shared-aspects" class="panel" hidden>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Shared daily sky</p>
+          <h2>Major Aspects in the Current Sky</h2>
+          <p class="muted">These planet-to-planet aspects are the same for all 12 signs today.</p>
+        </div>
+      </div>
+      <div id="aspect-list" class="aspect-list"></div>
+
       <div class="method-note">
         <strong>How this reading is built</strong>
         <p>Current planet positions come from the ephemeris. Planet-to-sign influence uses whole-sign relationships because no personal birth degree is collected. Planet-to-planet aspects use actual angular distance and configured orbs. Matching interpretation fragments are pulled from JSON.</p>
