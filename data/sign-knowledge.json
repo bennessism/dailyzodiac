@@ -1,0 +1,142 @@
+{
+  "elements": {
+    "fire": {
+      "label": "Fire",
+      "explanation": "Fire signs are traditionally associated with vitality, enthusiasm, self-expression and the urge to act. They tend to approach life by generating momentum, taking initiative and responding directly to what excites or motivates them.",
+      "signs": [
+        "Aries",
+        "Leo",
+        "Sagittarius"
+      ]
+    },
+    "earth": {
+      "label": "Earth",
+      "explanation": "Earth signs are traditionally associated with practicality, stability, material awareness and building things that can last. They tend to value usefulness, consistency, tangible results and a realistic sense of what can be sustained.",
+      "signs": [
+        "Taurus",
+        "Virgo",
+        "Capricorn"
+      ]
+    },
+    "air": {
+      "label": "Air",
+      "explanation": "Air signs are traditionally associated with thought, communication, comparison and social exchange. They tend to process life through ideas, conversation, perspective and the movement of information between people.",
+      "signs": [
+        "Gemini",
+        "Libra",
+        "Aquarius"
+      ]
+    },
+    "water": {
+      "label": "Water",
+      "explanation": "Water signs are traditionally associated with emotion, intuition, sensitivity and inward perception. They tend to respond strongly to atmosphere, attachment, memory and the emotional meaning beneath what is happening on the surface.",
+      "signs": [
+        "Cancer",
+        "Scorpio",
+        "Pisces"
+      ]
+    }
+  },
+  "modalities": {
+    "cardinal": {
+      "label": "Cardinal",
+      "explanation": "Cardinal signs begin seasons and are traditionally associated with initiation, direction and starting movement. They are often described as signs that prefer to set something in motion rather than simply maintain an existing pattern.",
+      "signs": [
+        "Aries",
+        "Cancer",
+        "Libra",
+        "Capricorn"
+      ]
+    },
+    "fixed": {
+      "label": "Fixed",
+      "explanation": "Fixed signs occupy the middle of a season and are traditionally associated with continuity, concentration and staying power. Their strength is persistence and commitment; their challenge can be holding a position for too long after circumstances have changed.",
+      "signs": [
+        "Taurus",
+        "Leo",
+        "Scorpio",
+        "Aquarius"
+      ]
+    },
+    "mutable": {
+      "label": "Mutable",
+      "explanation": "Mutable signs close the seasons and are traditionally associated with adaptation, transition and flexibility. They are often described as responsive to changing conditions, with a talent for adjusting, refining or moving between different possibilities.",
+      "signs": [
+        "Gemini",
+        "Virgo",
+        "Sagittarius",
+        "Pisces"
+      ]
+    }
+  },
+  "polarities": {
+    "active": {
+      "label": "Active",
+      "traditionalLabel": "Positive / Yang",
+      "explanation": "The active polarity is traditionally associated with outward expression, initiative and engagement with the external world. It does not mean better or stronger; it simply describes a more externally directed style of expression.",
+      "signs": [
+        "Aries",
+        "Gemini",
+        "Leo",
+        "Libra",
+        "Sagittarius",
+        "Aquarius"
+      ]
+    },
+    "receptive": {
+      "label": "Receptive",
+      "traditionalLabel": "Negative / Yin",
+      "explanation": "The receptive polarity is traditionally associated with inward processing, responsiveness and sensitivity to context. It does not mean passive or weak; it describes a style that tends to absorb, evaluate or respond before directing energy outward.",
+      "signs": [
+        "Taurus",
+        "Cancer",
+        "Virgo",
+        "Scorpio",
+        "Capricorn",
+        "Pisces"
+      ]
+    }
+  },
+  "rulers": {
+    "sun": {
+      "label": "Sun",
+      "explanation": "In astrology the Sun symbolizes identity, vitality, self-expression and the organizing center of the personality. Leo is the sign traditionally ruled by the Sun."
+    },
+    "moon": {
+      "label": "Moon",
+      "explanation": "In astrology the Moon symbolizes emotion, instinct, habit, memory and the need for security or belonging. Cancer is the sign traditionally ruled by the Moon."
+    },
+    "mercury": {
+      "label": "Mercury",
+      "explanation": "Mercury symbolizes thinking, language, learning, exchange and decision-making. Gemini and Virgo are traditionally ruled by Mercury, though the planet is expressed differently through each sign."
+    },
+    "venus": {
+      "label": "Venus",
+      "explanation": "Venus symbolizes attraction, values, affection, aesthetics and the way harmony or pleasure is sought. Taurus and Libra are traditionally ruled by Venus."
+    },
+    "mars": {
+      "label": "Mars",
+      "explanation": "Mars symbolizes drive, assertion, desire, competition and the way action is initiated. Aries is traditionally ruled by Mars, and Scorpio also has Mars as its traditional ruler."
+    },
+    "jupiter": {
+      "label": "Jupiter",
+      "explanation": "Jupiter symbolizes growth, belief, perspective, opportunity and expansion. Sagittarius is traditionally ruled by Jupiter, while Pisces also has Jupiter as its traditional ruler."
+    },
+    "saturn": {
+      "label": "Saturn",
+      "explanation": "Saturn symbolizes structure, responsibility, limits, discipline and long-term endurance. Capricorn is traditionally ruled by Saturn, while Aquarius also has Saturn as its traditional ruler."
+    },
+    "uranus": {
+      "label": "Uranus",
+      "explanation": "Uranus is used in modern astrology for disruption, independence, innovation and sudden change. Aquarius is commonly associated with Uranus as a modern ruler while retaining Saturn as its traditional ruler."
+    },
+    "neptune": {
+      "label": "Neptune",
+      "explanation": "Neptune is used in modern astrology for imagination, ideals, sensitivity, symbolism and blurred boundaries. Pisces is commonly associated with Neptune as a modern ruler while retaining Jupiter as its traditional ruler."
+    },
+    "pluto": {
+      "label": "Pluto",
+      "explanation": "Pluto is used in modern astrology for intensity, power, deep transformation, endings and renewal. Scorpio is commonly associated with Pluto as a modern ruler while retaining Mars as its traditional ruler."
+    }
+  }
+}
