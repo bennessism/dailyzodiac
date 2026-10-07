@@ -60,8 +60,7 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
   for(const signal of signals.filter(s=>s.relation!=="neutral").slice(0,3)){
     const placement=planetSigns.entries?.[`${signal.id}_${signal.sign.id}`];
     const ptxt=placement?.[theme.id]||placement?.overall||"";
-    const rtxt=relationStatements[signal.relation]?.[theme.id]||relationStatements[signal.relation]?.overall||"";
-    if(ptxt||rtxt) parts.push(`<p><strong>${signal.name} in ${signal.sign.name} · ${titleCase(signal.relation)}</strong>${ptxt} ${rtxt}</p>`);
+    if(ptxt) parts.push(`<p><strong>${signal.name} in ${signal.sign.name} · ${titleCase(signal.relation)}</strong>${ptxt}</p>`);
   }
   return parts.length?parts.join(""):"<p>No major configured signal dominates this theme right now, so it can be treated as a quieter background area today.</p>";
 }
