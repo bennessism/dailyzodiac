@@ -77,34 +77,61 @@
       </div>
     </section>
 
-    <section id="fixed-info" class="panel" hidden>
-      <div class="reading-head">
-        <div>
-          <p class="eyebrow">Section 1 · Fixed Info</p>
-          <h2 id="fixed-title"></h2>
-          <p class="muted">Core sign profile</p>
+    <details id="reading" class="panel sign-details" open hidden>
+      <summary class="detail-toggle">
+        <span class="detail-toggle-text">Open details</span>
+      </summary>
+      <div class="detail-body">
+        <div class="reading-head">
+          <div>
+            <p class="eyebrow">Daily Info</p>
+            <h2 id="reading-title"></h2>
+            <p id="reading-subtitle" class="muted"></p>
+          </div>
+          <div id="sign-symbol" class="big-symbol"></div>
         </div>
-        <div id="fixed-symbol" class="big-symbol"></div>
+        <div id="theme-grid" class="theme-grid"></div>
       </div>
-      <div class="fixed-grid">
-        <article class="info-card"><h3>Profile</h3><p id="fixed-profile"></p></article>
-        <article class="info-card"><h3>Strength</h3><p id="fixed-strength"></p></article>
-        <article class="info-card"><h3>Challenge</h3><p id="fixed-challenge"></p></article>
-        <article class="info-card"><h3>Basics</h3><p id="fixed-basics"></p></article>
-      </div>
-    </section>
+    </details>
 
-    <section id="reading" class="panel" hidden>
-      <div class="reading-head">
-        <div>
-          <p class="eyebrow">Section 2 · Daily Info</p>
-          <h2 id="reading-title"></h2>
-          <p id="reading-subtitle" class="muted"></p>
+    <details id="fixed-info" class="panel sign-details" hidden>
+      <summary class="detail-toggle">
+        <span class="detail-toggle-text">Open details</span>
+      </summary>
+      <div class="detail-body">
+        <div class="reading-head">
+          <div>
+            <p class="eyebrow">Sign reference</p>
+            <h2 id="fixed-title"></h2>
+            <p id="fixed-subtitle" class="muted"></p>
+          </div>
+          <div id="fixed-symbol" class="big-symbol"></div>
         </div>
-        <div id="sign-symbol" class="big-symbol"></div>
+
+        <div id="fixed-facts" class="fact-grid"></div>
+
+        <article class="profile-section">
+          <h3>Profile</h3>
+          <div id="fixed-profile" class="profile-copy"></div>
+        </article>
+
+        <div class="profile-two">
+          <article class="info-card"><h3>Strength</h3><p id="fixed-strength"></p></article>
+          <article class="info-card"><h3>Challenge</h3><p id="fixed-challenge"></p></article>
+        </div>
+
+        <article id="archetype-section" class="profile-section" hidden>
+          <h3>Additional archetypes</h3>
+          <p id="archetype-note" class="muted"></p>
+          <div id="archetype-list" class="archetype-list"></div>
+        </article>
+
+        <article class="profile-section association-section">
+          <h3>Traditional associations</h3>
+          <div id="fixed-associations" class="association-copy"></div>
+        </article>
       </div>
-      <div id="theme-grid" class="theme-grid"></div>
-    </section>
+    </details>
   </main>
 
   <footer class="wrap footer">
