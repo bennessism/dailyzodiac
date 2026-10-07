@@ -1,0 +1,17 @@
+{
+  "referenceSystem": "general-sun-sign",
+  "zodiac": "tropical",
+  "planetSignRelation": "whole-sign",
+  "planetPlanetAspects": "degree-based",
+  "maxSkyAspects": 8,
+  "maxSignalsPerTheme": 4,
+  "relationWeights": {
+    "conjunction": 5,
+    "opposition": 4,
+    "square": 4,
+    "trine": 3,
+    "sextile": 2,
+    "neutral": 1
+  },
+  "note": "No birth data is collected. Whole-sign relation is used for planet-to-selected-sign influence so the app never implies knowledge of a visitor's exact natal degree."
+}
