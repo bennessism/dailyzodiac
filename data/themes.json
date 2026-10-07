@@ -1,0 +1,91 @@
+{
+  "themes": [
+    {
+      "id": "overall",
+      "label": "Overall",
+      "planets": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars",
+        "jupiter",
+        "saturn",
+        "uranus",
+        "neptune",
+        "pluto"
+      ]
+    },
+    {
+      "id": "love",
+      "label": "Love & Relationships",
+      "planets": [
+        "venus",
+        "moon",
+        "mars",
+        "mercury"
+      ]
+    },
+    {
+      "id": "work",
+      "label": "Work & Career",
+      "planets": [
+        "sun",
+        "mercury",
+        "mars",
+        "jupiter",
+        "saturn"
+      ]
+    },
+    {
+      "id": "money",
+      "label": "Money",
+      "planets": [
+        "venus",
+        "jupiter",
+        "saturn",
+        "mercury"
+      ]
+    },
+    {
+      "id": "communication",
+      "label": "Communication",
+      "planets": [
+        "mercury",
+        "moon",
+        "venus",
+        "pluto"
+      ]
+    },
+    {
+      "id": "social",
+      "label": "Social",
+      "planets": [
+        "venus",
+        "mercury",
+        "moon",
+        "jupiter"
+      ]
+    },
+    {
+      "id": "energy",
+      "label": "Energy & Motivation",
+      "planets": [
+        "mars",
+        "sun",
+        "jupiter",
+        "saturn"
+      ]
+    },
+    {
+      "id": "advice",
+      "label": "Today's Focus",
+      "planets": [
+        "sun",
+        "moon",
+        "saturn",
+        "jupiter"
+      ]
+    }
+  ]
+}
