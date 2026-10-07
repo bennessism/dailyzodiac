@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0b0908"/>
+  <circle cx="256" cy="256" r="142" fill="#17100c" stroke="#b67c2e" stroke-width="8"/>
+  <circle cx="256" cy="256" r="102" fill="none" stroke="#7e241a" stroke-width="10"/>
+  <text x="256" y="289" fill="#f1cc70" font-family="serif" font-size="108" text-anchor="middle">☉</text>
+</svg>
