@@ -150,3 +150,57 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
   .aspect-title{display:block}.aspect-meta{display:block;margin-top:4px}
   .shared-details summary{align-items:flex-start}
 }
+.sign-details{position:relative}
+.sign-details>summary.detail-toggle{
+  list-style:none;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  min-height:24px;
+  margin:-4px 0 12px;
+  cursor:pointer;
+  color:var(--muted);
+  font-size:.85rem
+}
+.sign-details>summary.detail-toggle::-webkit-details-marker{display:none}
+.sign-details[open]>summary .detail-toggle-text{font-size:0}
+.sign-details[open]>summary .detail-toggle-text::after{content:"Close details";font-size:.85rem}
+.sign-details:not([open])>.detail-body{display:none}
+.fact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin-bottom:22px
+}
+.fact-button,.fact-static{
+  min-width:0;
+  text-align:left;
+  padding:14px 15px;
+  border:1px solid rgba(216,174,77,.23);
+  border-radius:14px;
+  background:#16120f;
+  color:var(--text)
+}
+.fact-button{cursor:pointer;font:inherit}
+.fact-button:hover,.fact-button:focus-visible{border-color:rgba(255,224,154,.55);outline:none}
+.fact-label{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.11em;margin-bottom:4px}
+.fact-value{display:block;color:var(--gold2);font-weight:750}
+.fact-help{display:block;margin-top:8px;color:#d5c7a5;font-size:.84rem;line-height:1.55}
+.profile-section{padding:20px 0;border-top:1px solid rgba(216,174,77,.16)}
+.profile-section:first-of-type{border-top:0}
+.profile-copy p{margin:0 0 14px;color:#ecdfbb;line-height:1.78}
+.profile-copy p:last-child{margin-bottom:0}
+.profile-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:4px 0 20px}
+.archetype-list{display:grid;gap:12px;margin-top:14px}
+.archetype-item{padding:16px;border:1px solid rgba(216,174,77,.18);border-radius:14px;background:#15110e}
+.archetype-item strong{display:block;color:var(--gold2);margin-bottom:6px}
+.archetype-item p{margin:0;color:#e8dcc0;line-height:1.7}
+.association-copy{display:flex;flex-wrap:wrap;gap:9px}
+.association-chip{padding:8px 11px;border:1px solid rgba(216,174,77,.2);border-radius:999px;color:#ddcfaa;background:#15110e;font-size:.88rem}
+@media(max-width:680px){
+  .profile-two{grid-template-columns:1fr}
+  .fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:420px){
+  .fact-grid{grid-template-columns:1fr}
+}
