@@ -1,74 +1,427 @@
 {
-  "aries": {
-    "profile": "Direct, energetic and quick to begin. Aries usually prefers momentum, honest expression and taking the first step rather than waiting.",
-    "strength": "Initiative, courage and willingness to act.",
-    "challenge": "Impatience, reacting too quickly or pushing before enough reflection.",
-    "basics": "Fire · Cardinal"
-  },
-  "taurus": {
-    "profile": "Steady, practical and security-minded. Taurus usually values stability, comfort, patience and things that can prove their worth over time.",
-    "strength": "Consistency, patience and staying power.",
-    "challenge": "Stubbornness or resisting necessary change.",
-    "basics": "Earth · Fixed"
-  },
-  "gemini": {
-    "profile": "Curious, flexible and mentally active. Gemini usually enjoys learning, comparing ideas and keeping conversation or information moving.",
-    "strength": "Adaptability, communication and range.",
-    "challenge": "Scattered attention or inconsistency.",
-    "basics": "Air · Mutable"
-  },
-  "cancer": {
-    "profile": "Protective, instinctive and emotionally aware. Cancer usually values belonging, care, familiarity and emotional safety.",
-    "strength": "Sensitivity, loyalty and care.",
-    "challenge": "Defensiveness, withdrawal or mood-led reactions.",
-    "basics": "Water · Cardinal"
-  },
-  "leo": {
-    "profile": "Expressive, warm and creative. Leo usually values heartfelt self-expression, dignity and the freedom to be visibly itself.",
-    "strength": "Confidence, generosity and creative spirit.",
-    "challenge": "Pride or needing too much recognition.",
-    "basics": "Fire · Fixed"
-  },
-  "virgo": {
-    "profile": "Careful, practical and detail-aware. Virgo usually notices what can be improved and often expresses care through useful attention.",
-    "strength": "Discernment, practicality and refinement.",
-    "challenge": "Over-analysis or excessive criticism.",
-    "basics": "Earth · Mutable"
-  },
-  "libra": {
-    "profile": "Balanced, relational and diplomatic. Libra usually values proportion, cooperation and understanding how different viewpoints can meet.",
-    "strength": "Harmony, social intelligence and perspective.",
-    "challenge": "Indecision or over-accommodating others.",
-    "basics": "Air · Cardinal"
-  },
-  "scorpio": {
-    "profile": "Intense, perceptive and private. Scorpio usually prefers depth over surface, sincerity over pretense and emotional truth over vagueness.",
-    "strength": "Focus, emotional depth and strategic awareness.",
-    "challenge": "Suspicion, fixation or holding too tightly.",
-    "basics": "Water · Fixed"
-  },
-  "sagittarius": {
-    "profile": "Open, future-facing and meaning-seeking. Sagittarius usually values movement, possibility, perspective and a sense that life can expand.",
-    "strength": "Optimism, breadth and adventurous spirit.",
-    "challenge": "Overconfidence, bluntness or skipping details.",
-    "basics": "Fire · Mutable"
-  },
-  "capricorn": {
-    "profile": "Structured, pragmatic and long-term oriented. Capricorn usually focuses on responsibility, durable progress and what can actually be built.",
-    "strength": "Discipline, persistence and realism.",
-    "challenge": "Rigidity or excessive seriousness.",
-    "basics": "Earth · Cardinal"
-  },
-  "aquarius": {
-    "profile": "Independent, future-minded and idea-driven. Aquarius usually values originality, perspective and doing things differently from habit.",
-    "strength": "Originality, objectivity and broader awareness.",
-    "challenge": "Detachment or contrariness.",
-    "basics": "Air · Fixed"
-  },
-  "pisces": {
-    "profile": "Receptive, imaginative and sensitive. Pisces usually responds through mood, intuition, empathy and subtle impressions rather than hard edges.",
-    "strength": "Empathy, imagination and intuition.",
-    "challenge": "Blurred boundaries, vagueness or escapism.",
-    "basics": "Water · Mutable"
+  "schemaVersion": 2,
+  "note": "Sign-specific profiles. Shared element, modality, polarity and ruler definitions live in sign-knowledge.json.",
+  "signs": {
+    "aries": {
+      "name": "Aries",
+      "symbol": "♈︎",
+      "dateRange": "Mar 21 – Apr 19",
+      "element": "fire",
+      "modality": "cardinal",
+      "polarity": "active",
+      "rulers": {
+        "traditional": [
+          "mars"
+        ],
+        "modern": []
+      },
+      "representation": "Ram",
+      "colors": [
+        "Red",
+        "Scarlet",
+        "Warm orange"
+      ],
+      "keywords": [
+        "Initiative",
+        "Courage",
+        "Directness",
+        "Momentum"
+      ],
+      "profile": [
+        "Aries is traditionally described as a direct, energetic and self-starting sign. As Cardinal Fire, it combines the initiating quality of the Cardinal modality with the confidence, warmth and immediacy associated with Fire. This often gives Aries a preference for movement, clear action and discovering what happens by doing rather than waiting.",
+        "Aries tends to value independence and honest expression. It often responds quickly to challenges and can be energized by competition, novelty or a clear goal. The same speed that creates courage and initiative can also become impatience when reflection or cooperation is needed.",
+        "In relationships and group settings, Aries often appreciates openness and straightforwardness. In work or personal goals, it usually does best when there is room to begin, lead, test an idea or create momentum."
+      ],
+      "strength": "Aries is especially associated with initiative, courage and the willingness to make a first move when others are still considering what to do.",
+      "challenge": "Its main challenge is managing haste. Acting quickly can be a strength, but impatience or reacting before enough information is available can create avoidable conflict."
+    },
+    "taurus": {
+      "name": "Taurus",
+      "symbol": "♉︎",
+      "dateRange": "Apr 20 – May 20",
+      "element": "earth",
+      "modality": "fixed",
+      "polarity": "receptive",
+      "rulers": {
+        "traditional": [
+          "venus"
+        ],
+        "modern": []
+      },
+      "representation": "Bull",
+      "colors": [
+        "Green",
+        "Earth tones",
+        "Soft pink"
+      ],
+      "keywords": [
+        "Stability",
+        "Patience",
+        "Value",
+        "Consistency"
+      ],
+      "profile": [
+        "Taurus is traditionally described as steady, practical and security-minded. Fixed Earth combines the persistence of the Fixed modality with Earth’s concern for stability, resources and tangible results. This often gives Taurus a strong preference for reliability, continuity and things that prove their value over time.",
+        "Taurus tends to move carefully rather than quickly, and once committed it can be exceptionally persistent. Comfort, quality and a predictable foundation often matter more than novelty for its own sake.",
+        "In relationships, Taurus usually values trust, loyalty and dependable affection. In work and money matters, it is often associated with patience, craftsmanship, material judgment and the ability to keep building after initial enthusiasm has faded."
+      ],
+      "strength": "Taurus is especially associated with consistency, patience and the ability to sustain effort over long periods.",
+      "challenge": "Its main challenge is knowing when stability has become resistance. Persistence is useful until circumstances genuinely require a change of approach."
+    },
+    "gemini": {
+      "name": "Gemini",
+      "symbol": "♊︎",
+      "dateRange": "May 21 – Jun 20",
+      "element": "air",
+      "modality": "mutable",
+      "polarity": "active",
+      "rulers": {
+        "traditional": [
+          "mercury"
+        ],
+        "modern": []
+      },
+      "representation": "Twins",
+      "colors": [
+        "Yellow",
+        "Light blue",
+        "Silver"
+      ],
+      "keywords": [
+        "Curiosity",
+        "Communication",
+        "Adaptability",
+        "Variety"
+      ],
+      "profile": [
+        "Gemini is traditionally described as curious, flexible and mentally active. Mutable Air combines adaptability with communication, comparison and the circulation of ideas. This often creates a strong need to learn, ask questions, exchange information and keep more than one possibility in view.",
+        "Gemini usually prefers movement over stagnation, especially in thought and conversation. It can shift perspective quickly and often notices connections between subjects that other people treat separately.",
+        "In relationships, Gemini frequently values mental stimulation and open dialogue. In work or study, it tends to thrive where information changes quickly, multiple tasks are involved or communication itself is central."
+      ],
+      "strength": "Gemini is especially associated with adaptability, verbal skill and the ability to see several sides of an issue.",
+      "challenge": "Its main challenge is maintaining continuity. Curiosity can become scattered attention when too many options are pursued at once."
+    },
+    "cancer": {
+      "name": "Cancer",
+      "symbol": "♋︎",
+      "dateRange": "Jun 21 – Jul 22",
+      "element": "water",
+      "modality": "cardinal",
+      "polarity": "receptive",
+      "rulers": {
+        "traditional": [
+          "moon"
+        ],
+        "modern": []
+      },
+      "representation": "Crab",
+      "colors": [
+        "Silver",
+        "White",
+        "Sea green"
+      ],
+      "keywords": [
+        "Care",
+        "Protection",
+        "Belonging",
+        "Instinct"
+      ],
+      "profile": [
+        "Cancer is traditionally described as protective, instinctive and emotionally aware. Cardinal Water combines the initiating quality of the Cardinal modality with Water’s concern for feeling, memory and attachment. This can make Cancer highly responsive to what creates safety, belonging and emotional continuity.",
+        "Cancer often notices atmosphere before facts are fully stated. Its protective instinct can be directed toward family, close friends, a home, a team or anything it considers worth caring for.",
+        "In relationships, Cancer usually values trust and emotional responsiveness. In work or personal responsibilities, it may be particularly strong at creating continuity, supporting others and sensing what a group needs beneath the obvious surface."
+      ],
+      "strength": "Cancer is especially associated with care, loyalty, emotional awareness and the instinct to protect what matters.",
+      "challenge": "Its main challenge is preventing sensitivity from becoming defensiveness, withdrawal or decisions driven entirely by a temporary mood."
+    },
+    "leo": {
+      "name": "Leo",
+      "symbol": "♌︎",
+      "dateRange": "Jul 23 – Aug 22",
+      "element": "fire",
+      "modality": "fixed",
+      "polarity": "active",
+      "rulers": {
+        "traditional": [
+          "sun"
+        ],
+        "modern": []
+      },
+      "representation": "Lion",
+      "colors": [
+        "Gold",
+        "Orange",
+        "Royal red"
+      ],
+      "keywords": [
+        "Expression",
+        "Confidence",
+        "Creativity",
+        "Warmth"
+      ],
+      "profile": [
+        "Leo is traditionally described as expressive, warm and creative. Fixed Fire combines the persistence of the Fixed modality with Fire’s vitality and self-expression. This often produces a strong wish to create, contribute visibly and remain loyal to what feels personally meaningful.",
+        "Leo usually responds well when there is room for individuality, pride in good work and generous participation rather than anonymous routine. Recognition matters, but at its best Leo also enjoys encouraging other people to shine.",
+        "In relationships, Leo often values loyalty, warmth and sincere appreciation. In work or creative projects, it is associated with leadership, presentation, performance and the ability to keep enthusiasm alive."
+      ],
+      "strength": "Leo is especially associated with confidence, generosity, creative expression and the ability to inspire visible enthusiasm.",
+      "challenge": "Its main challenge is balancing healthy pride with flexibility, so that the need to be recognized does not overshadow collaboration or self-awareness."
+    },
+    "virgo": {
+      "name": "Virgo",
+      "symbol": "♍︎",
+      "dateRange": "Aug 23 – Sep 22",
+      "element": "earth",
+      "modality": "mutable",
+      "polarity": "receptive",
+      "rulers": {
+        "traditional": [
+          "mercury"
+        ],
+        "modern": []
+      },
+      "representation": "Maiden",
+      "colors": [
+        "Olive",
+        "Navy",
+        "Natural beige"
+      ],
+      "keywords": [
+        "Discernment",
+        "Service",
+        "Precision",
+        "Improvement"
+      ],
+      "profile": [
+        "Virgo is traditionally described as careful, practical and improvement-focused. Mutable Earth combines adaptability with attention to usefulness, detail and real-world function. This often makes Virgo interested in how something can be organized, refined or made more effective.",
+        "Virgo tends to notice small inconsistencies quickly and may express care through practical help rather than dramatic display. Its analytical style can be excellent for systems, routines, editing and troubleshooting.",
+        "In relationships, Virgo often values reliability and thoughtful attention. In work, it is commonly associated with precision, service, quality control and the patience to improve something step by step."
+      ],
+      "strength": "Virgo is especially associated with discernment, practical intelligence and the ability to improve details that others overlook.",
+      "challenge": "Its main challenge is preventing useful analysis from becoming excessive criticism, perfectionism or difficulty accepting something that is already good enough."
+    },
+    "libra": {
+      "name": "Libra",
+      "symbol": "♎︎",
+      "dateRange": "Sep 23 – Oct 22",
+      "element": "air",
+      "modality": "cardinal",
+      "polarity": "active",
+      "rulers": {
+        "traditional": [
+          "venus"
+        ],
+        "modern": []
+      },
+      "representation": "Scales",
+      "colors": [
+        "Soft blue",
+        "Rose",
+        "Pastel tones"
+      ],
+      "keywords": [
+        "Balance",
+        "Diplomacy",
+        "Partnership",
+        "Perspective"
+      ],
+      "profile": [
+        "Libra is traditionally described as relational, diplomatic and concerned with balance. Cardinal Air combines initiative with communication and social perspective. This often gives Libra an instinct for comparison: seeing how different people, ideas or interests can be brought into a more workable relationship.",
+        "Libra tends to notice fairness, tone and proportion. It is often less interested in winning an argument than in finding a position that can be lived with by everyone involved.",
+        "In relationships, partnership and reciprocity are important themes. In work, Libra is frequently associated with negotiation, design, mediation, presentation and situations where understanding more than one viewpoint is useful."
+      ],
+      "strength": "Libra is especially associated with social intelligence, diplomacy and the ability to understand competing perspectives.",
+      "challenge": "Its main challenge is making clear decisions when keeping every option open or pleasing everyone is no longer possible."
+    },
+    "scorpio": {
+      "name": "Scorpio",
+      "symbol": "♏︎",
+      "dateRange": "Oct 23 – Nov 21",
+      "element": "water",
+      "modality": "fixed",
+      "polarity": "receptive",
+      "rulers": {
+        "traditional": [
+          "mars"
+        ],
+        "modern": [
+          "pluto"
+        ]
+      },
+      "representation": "Scorpion",
+      "colors": [
+        "Deep red",
+        "Burgundy",
+        "Black"
+      ],
+      "keywords": [
+        "Depth",
+        "Intensity",
+        "Privacy",
+        "Transformation"
+      ],
+      "profile": [
+        "Scorpio is traditionally described as intense, perceptive and private. Fixed Water combines emotional depth and intuition with concentration and persistence. This often produces a sign that prefers sincerity over surface-level interaction and tends to stay with an issue until it understands what is really happening underneath.",
+        "Scorpio is strongly associated in modern astrology with themes of trust, power, attachment, endings and transformation. It may be slow to reveal vulnerability, but once emotionally invested it can be exceptionally loyal, determined and difficult to distract from what matters.",
+        "In relationships, Scorpio often values depth, honesty and strong trust rather than casual openness with everyone. In work or personal goals, it is associated with strategy, investigation, resilience and the ability to continue through situations that require psychological endurance."
+      ],
+      "strength": "Scorpio is especially associated with focus, emotional depth, resilience and the ability to perceive motives or patterns that are not immediately obvious.",
+      "challenge": "Its main challenge is preventing depth from becoming suspicion, fixation, secrecy or an excessive need to control uncertain situations.",
+      "archetypes": [
+        {
+          "name": "Scorpion",
+          "text": "The Scorpion is the primary and traditional animal symbol of Scorpio. In modern astrological interpretation it is often used for the sign’s instinctive, defensive and survival-oriented side: alert to threat, highly protective of vulnerability and capable of a strong response when boundaries are crossed."
+        },
+        {
+          "name": "Eagle",
+          "text": "The Eagle is a widely discussed additional Scorpio archetype in modern astrology. It represents perspective, self-command and the ability to rise above an immediate emotional reaction, using Scorpio’s intensity with greater awareness rather than simply responding from instinct."
+        },
+        {
+          "name": "Phoenix",
+          "text": "The Phoenix is another widely used modern Scorpio archetype and emphasizes transformation, renewal and rebuilding after an ending or profound change. It reflects the idea that Scorpio can use difficult experiences as material for psychological regeneration rather than remaining defined by the original loss or crisis."
+        },
+        {
+          "name": "Serpent",
+          "text": "Some astrological traditions and modern writers also use the Serpent or Snake as an additional Scorpio image. It is commonly connected with instinct, secrecy, shedding an old skin and the transitional process between survival and deeper transformation. It is less standardized than the Scorpion, Eagle and Phoenix symbolism."
+        }
+      ],
+      "archetypeNote": "These additional archetypes are interpretive traditions used by some astrologers and writers; they are not additional official zodiac signs or universally standardized stages."
+    },
+    "sagittarius": {
+      "name": "Sagittarius",
+      "symbol": "♐︎",
+      "dateRange": "Nov 22 – Dec 21",
+      "element": "fire",
+      "modality": "mutable",
+      "polarity": "active",
+      "rulers": {
+        "traditional": [
+          "jupiter"
+        ],
+        "modern": []
+      },
+      "representation": "Archer / Centaur",
+      "colors": [
+        "Purple",
+        "Royal blue",
+        "Deep red"
+      ],
+      "keywords": [
+        "Exploration",
+        "Perspective",
+        "Optimism",
+        "Meaning"
+      ],
+      "profile": [
+        "Sagittarius is traditionally described as open, future-facing and meaning-seeking. Mutable Fire combines adaptability with enthusiasm and expansion. This often creates a strong interest in possibilities, travel, learning, belief systems and experiences that broaden perspective.",
+        "Sagittarius usually prefers a sense of movement and freedom. It often learns by exploring rather than by remaining inside a narrow routine, and it may be especially motivated by goals that provide a larger purpose.",
+        "In relationships, Sagittarius commonly values honesty, space and shared discovery. In work or study, it is associated with big-picture thinking, teaching, exploration and the confidence to attempt something beyond the immediately familiar."
+      ],
+      "strength": "Sagittarius is especially associated with optimism, breadth of perspective and the ability to recover momentum by seeing a larger possibility.",
+      "challenge": "Its main challenge is keeping confidence connected to detail, so enthusiasm does not become overpromising, bluntness or unnecessary risk."
+    },
+    "capricorn": {
+      "name": "Capricorn",
+      "symbol": "♑︎",
+      "dateRange": "Dec 22 – Jan 19",
+      "element": "earth",
+      "modality": "cardinal",
+      "polarity": "receptive",
+      "rulers": {
+        "traditional": [
+          "saturn"
+        ],
+        "modern": []
+      },
+      "representation": "Sea-Goat",
+      "colors": [
+        "Charcoal",
+        "Dark green",
+        "Brown"
+      ],
+      "keywords": [
+        "Structure",
+        "Responsibility",
+        "Endurance",
+        "Achievement"
+      ],
+      "profile": [
+        "Capricorn is traditionally described as structured, pragmatic and long-term oriented. Cardinal Earth combines initiation with practicality and material realism. This often produces a strong focus on what can be built, managed, improved or made durable over time.",
+        "Capricorn usually respects competence, responsibility and clear standards. It may appear reserved while evaluating what is realistic, but once committed it can work steadily toward goals that require patience.",
+        "In relationships, Capricorn often values reliability and consistency. In work, it is strongly associated with organization, planning, accountability, leadership through competence and the ability to delay immediate gratification for a larger result."
+      ],
+      "strength": "Capricorn is especially associated with discipline, persistence, realism and the ability to work toward difficult long-term goals.",
+      "challenge": "Its main challenge is avoiding excessive rigidity, pessimism or defining personal worth only through achievement and responsibility."
+    },
+    "aquarius": {
+      "name": "Aquarius",
+      "symbol": "♒︎",
+      "dateRange": "Jan 20 – Feb 18",
+      "element": "air",
+      "modality": "fixed",
+      "polarity": "active",
+      "rulers": {
+        "traditional": [
+          "saturn"
+        ],
+        "modern": [
+          "uranus"
+        ]
+      },
+      "representation": "Water-Bearer",
+      "colors": [
+        "Electric blue",
+        "Turquoise",
+        "Silver"
+      ],
+      "keywords": [
+        "Originality",
+        "Independence",
+        "Ideas",
+        "Reform"
+      ],
+      "profile": [
+        "Aquarius is traditionally described as independent, idea-driven and future-minded. Fixed Air combines persistence with thought, social perspective and conceptual systems. This can produce strong convictions about how things could be organized differently or improved beyond convention.",
+        "Aquarius often values intellectual freedom and may be comfortable taking a position that differs from the group, even while remaining interested in collective or social questions. It tends to resist being defined only by personal emotion or immediate tradition.",
+        "In relationships, Aquarius often values friendship, individuality and room to think independently. In work or community settings, it is associated with innovation, systems, networks, reform and unconventional problem-solving."
+      ],
+      "strength": "Aquarius is especially associated with originality, objectivity and the ability to imagine alternatives to an established pattern.",
+      "challenge": "Its main challenge is balancing independence with emotional presence, so detachment or contrariness does not replace genuine engagement."
+    },
+    "pisces": {
+      "name": "Pisces",
+      "symbol": "♓︎",
+      "dateRange": "Feb 19 – Mar 20",
+      "element": "water",
+      "modality": "mutable",
+      "polarity": "receptive",
+      "rulers": {
+        "traditional": [
+          "jupiter"
+        ],
+        "modern": [
+          "neptune"
+        ]
+      },
+      "representation": "Two Fish",
+      "colors": [
+        "Sea green",
+        "Lavender",
+        "Soft blue"
+      ],
+      "keywords": [
+        "Imagination",
+        "Empathy",
+        "Intuition",
+        "Adaptability"
+      ],
+      "profile": [
+        "Pisces is traditionally described as receptive, imaginative and sensitive. Mutable Water combines emotional awareness with adaptability, often creating a strong response to atmosphere, symbolism, creativity and the feelings of other people.",
+        "Pisces may process experience indirectly through intuition, images or mood rather than through hard boundaries and immediate categorization. This can make it compassionate and imaginative, but also more vulnerable to confusion when limits are unclear.",
+        "In relationships, Pisces often values emotional understanding and empathy. In work or creative life, it is commonly associated with imagination, art, healing, spirituality and situations where sensitivity to subtle information is useful."
+      ],
+      "strength": "Pisces is especially associated with empathy, imagination, intuition and the ability to understand experiences that are difficult to express literally.",
+      "challenge": "Its main challenge is maintaining clear boundaries and practical direction when sensitivity, idealism or avoidance makes reality harder to define."
+    }
   }
 }
