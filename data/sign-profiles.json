@@ -1,0 +1,74 @@
+{
+  "aries": {
+    "profile": "Direct, energetic and quick to begin. Aries usually prefers momentum, honest expression and taking the first step rather than waiting.",
+    "strength": "Initiative, courage and willingness to act.",
+    "challenge": "Impatience, reacting too quickly or pushing before enough reflection.",
+    "basics": "Fire · Cardinal"
+  },
+  "taurus": {
+    "profile": "Steady, practical and security-minded. Taurus usually values stability, comfort, patience and things that can prove their worth over time.",
+    "strength": "Consistency, patience and staying power.",
+    "challenge": "Stubbornness or resisting necessary change.",
+    "basics": "Earth · Fixed"
+  },
+  "gemini": {
+    "profile": "Curious, flexible and mentally active. Gemini usually enjoys learning, comparing ideas and keeping conversation or information moving.",
+    "strength": "Adaptability, communication and range.",
+    "challenge": "Scattered attention or inconsistency.",
+    "basics": "Air · Mutable"
+  },
+  "cancer": {
+    "profile": "Protective, instinctive and emotionally aware. Cancer usually values belonging, care, familiarity and emotional safety.",
+    "strength": "Sensitivity, loyalty and care.",
+    "challenge": "Defensiveness, withdrawal or mood-led reactions.",
+    "basics": "Water · Cardinal"
+  },
+  "leo": {
+    "profile": "Expressive, warm and creative. Leo usually values heartfelt self-expression, dignity and the freedom to be visibly itself.",
+    "strength": "Confidence, generosity and creative spirit.",
+    "challenge": "Pride or needing too much recognition.",
+    "basics": "Fire · Fixed"
+  },
+  "virgo": {
+    "profile": "Careful, practical and detail-aware. Virgo usually notices what can be improved and often expresses care through useful attention.",
+    "strength": "Discernment, practicality and refinement.",
+    "challenge": "Over-analysis or excessive criticism.",
+    "basics": "Earth · Mutable"
+  },
+  "libra": {
+    "profile": "Balanced, relational and diplomatic. Libra usually values proportion, cooperation and understanding how different viewpoints can meet.",
+    "strength": "Harmony, social intelligence and perspective.",
+    "challenge": "Indecision or over-accommodating others.",
+    "basics": "Air · Cardinal"
+  },
+  "scorpio": {
+    "profile": "Intense, perceptive and private. Scorpio usually prefers depth over surface, sincerity over pretense and emotional truth over vagueness.",
+    "strength": "Focus, emotional depth and strategic awareness.",
+    "challenge": "Suspicion, fixation or holding too tightly.",
+    "basics": "Water · Fixed"
+  },
+  "sagittarius": {
+    "profile": "Open, future-facing and meaning-seeking. Sagittarius usually values movement, possibility, perspective and a sense that life can expand.",
+    "strength": "Optimism, breadth and adventurous spirit.",
+    "challenge": "Overconfidence, bluntness or skipping details.",
+    "basics": "Fire · Mutable"
+  },
+  "capricorn": {
+    "profile": "Structured, pragmatic and long-term oriented. Capricorn usually focuses on responsibility, durable progress and what can actually be built.",
+    "strength": "Discipline, persistence and realism.",
+    "challenge": "Rigidity or excessive seriousness.",
+    "basics": "Earth · Cardinal"
+  },
+  "aquarius": {
+    "profile": "Independent, future-minded and idea-driven. Aquarius usually values originality, perspective and doing things differently from habit.",
+    "strength": "Originality, objectivity and broader awareness.",
+    "challenge": "Detachment or contrariness.",
+    "basics": "Air · Fixed"
+  },
+  "pisces": {
+    "profile": "Receptive, imaginative and sensitive. Pisces usually responds through mood, intuition, empathy and subtle impressions rather than hard edges.",
+    "strength": "Empathy, imagination and intuition.",
+    "challenge": "Blurred boundaries, vagueness or escapism.",
+    "basics": "Water · Mutable"
+  }
+}
