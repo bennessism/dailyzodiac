@@ -13,7 +13,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <p class="eyebrow">bennessism / dailyzodiac</p>
+      <p class="eyebrow">bennessism</p>
       <h1>Daily Zodiac</h1>
       <p class="tagline">Today’s sky · 12 signs · light daily reflection</p>
     </div>
@@ -25,17 +25,7 @@
       <span>Ephemeris positions are astronomical data; zodiac interpretations are traditional astrology content, not fact or fate.</span>
     </section>
 
-    <section class="panel selector-panel">
-      <p class="eyebrow">Start here</p>
-      <h2>Choose Your Sign</h2>
-      <p class="muted">Tap a golden zodiac symbol to open its fixed profile and today’s reading.</p>
-      <div class="wheel-wrap">
-        <div id="zodiac-wheel" class="zodiac-wheel" aria-label="Zodiac sign selector"></div>
-        <div class="wheel-center"><small>Daily</small><strong>Zodiac</strong></div>
-      </div>
-    </section>
-
-    <section class="panel">
+    <section class="panel today-panel">
       <div class="section-head">
         <div>
           <p class="eyebrow">Current ephemeris</p>
@@ -43,8 +33,40 @@
         </div>
         <p id="today-date" class="muted"></p>
       </div>
+
       <div id="engine-status" class="status">Loading ephemeris…</div>
-      <div id="sky-grid" class="sky-grid"></div>
+      <div id="sky-list" class="sky-list"></div>
+
+      <details id="shared-aspects" class="shared-details">
+        <summary>
+          <span>
+            <small>Shared daily sky</small>
+            <strong>Major Aspects in the Current Sky</strong>
+          </span>
+          <span class="summary-hint">Open details</span>
+        </summary>
+
+        <div class="shared-content">
+          <p class="muted">These planet-to-planet aspects are the same for all 12 signs today.</p>
+          <div id="aspect-list" class="aspect-list"></div>
+
+          <div class="method-note">
+            <strong>How this reading is built</strong>
+            <p>Current planet positions come from the ephemeris. Planet-to-sign influence uses whole-sign relationships because no personal birth degree is collected. Planet-to-planet aspects use actual angular distance and configured orbs. Matching interpretation fragments are pulled from JSON.</p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel selector-panel">
+      <p class="eyebrow">Choose your sign</p>
+      <h2>Pick Your Zodiac Sign</h2>
+      <p class="muted">Tap a zodiac symbol to open its fixed profile and today’s sign-specific reading.</p>
+
+      <div class="wheel-wrap">
+        <div id="zodiac-wheel" class="zodiac-wheel" aria-label="Zodiac sign selector"></div>
+        <div class="wheel-center"><small>Daily</small><strong>Zodiac</strong></div>
+      </div>
     </section>
 
     <section id="fixed-info" class="panel" hidden>
@@ -74,22 +96,6 @@
         <div id="sign-symbol" class="big-symbol"></div>
       </div>
       <div id="theme-grid" class="theme-grid"></div>
-    </section>
-
-    <section id="shared-aspects" class="panel" hidden>
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Shared daily sky</p>
-          <h2>Major Aspects in the Current Sky</h2>
-          <p class="muted">These planet-to-planet aspects are the same for all 12 signs today.</p>
-        </div>
-      </div>
-      <div id="aspect-list" class="aspect-list"></div>
-
-      <div class="method-note">
-        <strong>How this reading is built</strong>
-        <p>Current planet positions come from the ephemeris. Planet-to-sign influence uses whole-sign relationships because no personal birth degree is collected. Planet-to-planet aspects use actual angular distance and configured orbs. Matching interpretation fragments are pulled from JSON.</p>
-      </div>
     </section>
   </main>
 
