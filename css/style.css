@@ -29,9 +29,22 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .status{padding:12px 14px;border-radius:12px;background:#19140f;border:1px solid #4d3519;color:var(--muted);margin-bottom:18px}
 .status.ok{color:#efd488}.status.error{color:#ffb7bd}
 
-.sky-list{display:grid;gap:0;border-top:1px solid rgba(216,174,77,.16);border-bottom:1px solid rgba(216,174,77,.16)}
-.sky-row{display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(216,174,77,.12)}
-.sky-row:last-child{border-bottom:0}
+.sky-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:28px;
+  border-top:1px solid rgba(216,174,77,.16);
+  border-bottom:1px solid rgba(216,174,77,.16)
+}
+.sky-row{
+  display:grid;
+  grid-template-columns:110px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid rgba(216,174,77,.12)
+}
+.sky-row:nth-last-child(-n+2){border-bottom:0}
 .sky-row strong{color:var(--gold2)}
 .sky-sign{color:#efe2bd}
 .sky-degree{color:var(--muted);white-space:nowrap}
@@ -76,14 +89,35 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .sign-node{position:absolute;left:50%;top:50%;width:72px;height:72px}
 .sign-button{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  appearance:none;border:0;background:transparent;padding:0;margin:0;color:var(--gold2);
-  display:grid;place-items:center;cursor:pointer;transition:.2s ease;
+  appearance:none;border:0;background:transparent;padding:0;margin:0;
+  color:#c99835;display:grid;place-items:center;cursor:pointer;transition:.22s ease;
 }
-.sign-button:hover,.sign-button:focus-visible,.sign-button.active{
-  outline:none;transform:translate(-50%,-50%) scale(1.24);color:#fff1be;
-  text-shadow:0 0 18px rgba(216,174,77,.7),0 0 28px rgba(204,45,28,.55)
+.sign-glyph{
+  font-family:"Segoe UI Symbol","Noto Sans Symbols 2","Arial Unicode MS",serif;
+  font-variant-emoji:text;
+  font-size:2.15rem;
+  line-height:1;
+  color:currentColor;
+  text-shadow:0 0 8px rgba(216,174,77,.18),0 0 12px rgba(165,28,22,.08);
+  animation:zodiacPulse 3.8s ease-in-out infinite;
 }
-.sign-glyph{font-size:2.15rem;line-height:1}
+.sign-button:hover,.sign-button:focus-visible{
+  outline:none;transform:translate(-50%,-50%) scale(1.22);color:#ffe7a6;
+  text-shadow:0 0 18px rgba(216,174,77,.82),0 0 30px rgba(204,45,28,.58)
+}
+.sign-button.active{
+  outline:none;transform:translate(-50%,-50%) scale(1.28);color:#fff2bd;
+  text-shadow:0 0 22px rgba(255,214,120,.95),0 0 36px rgba(205,38,26,.72)
+}
+.sign-button.active .sign-glyph{animation:zodiacSelected 1.8s ease-in-out infinite}
+@keyframes zodiacPulse{
+  0%,100%{filter:drop-shadow(0 0 0 rgba(216,174,77,0));opacity:.86}
+  50%{filter:drop-shadow(0 0 7px rgba(216,174,77,.42));opacity:1}
+}
+@keyframes zodiacSelected{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(255,218,130,.55))}
+  50%{filter:drop-shadow(0 0 12px rgba(255,218,130,.95)) drop-shadow(0 0 16px rgba(190,35,25,.7))}
+}
 .sign-label{position:absolute;left:50%;top:calc(50% + 31px);transform:translateX(-50%);font-size:.72rem;color:var(--muted);white-space:nowrap}
 
 .big-symbol{font-size:4rem;color:var(--gold);text-shadow:0 0 22px rgba(216,174,77,.22),0 0 30px rgba(165,28,22,.12)}
@@ -105,7 +139,10 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
   .site-header{padding-top:36px}.big-symbol{font-size:3rem}
   .wheel-wrap{min-height:360px}.zodiac-wheel{width:320px;height:320px}.wheel-center{width:102px;height:102px}
   .sign-node{width:58px;height:58px}.sign-glyph{font-size:1.75rem}.sign-label{top:calc(50% + 28px);font-size:.65rem}
+  .sky-list{grid-template-columns:1fr}
   .sky-row{grid-template-columns:90px 1fr auto;gap:10px}
+  .sky-row:nth-last-child(-n+2){border-bottom:1px solid rgba(216,174,77,.12)}
+  .sky-row:last-child{border-bottom:0}
   .aspect-title{display:block}.aspect-meta{display:block;margin-top:4px}
   .shared-details summary{align-items:flex-start}
 }
