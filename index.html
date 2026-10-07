@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Daily zodiac readings assembled from current ephemeris positions and reusable astrology interpretations.">
+  <title>Daily Zodiac</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="eyebrow">bennessism / dailyzodiac</p>
+      <h1>Daily Zodiac</h1>
+      <p class="tagline">Today’s sky · 12 signs · light daily reflection</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="notice">
+      <strong>For entertainment & reflection.</strong>
+      <span>Ephemeris positions are astronomical data; zodiac interpretations are traditional astrology content, not fact or fate.</span>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Current ephemeris</p>
+          <h2>Today’s Sky</h2>
+        </div>
+        <p id="today-date" class="muted"></p>
+      </div>
+      <div id="engine-status" class="status">Loading ephemeris…</div>
+      <div id="sky-grid" class="sky-grid"></div>
+      <div id="aspect-list" class="aspect-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">General Sun-sign reading</p>
+          <h2>Choose your sign</h2>
+        </div>
+      </div>
+      <div id="sign-grid" class="sign-grid"></div>
+    </section>
+
+    <section id="reading" class="panel reading" hidden>
+      <div class="reading-head">
+        <div>
+          <p class="eyebrow">Daily Zodiac</p>
+          <h2 id="reading-title"></h2>
+          <p id="reading-subtitle" class="muted"></p>
+        </div>
+        <div id="sign-symbol" class="big-symbol" aria-hidden="true"></div>
+      </div>
+      <div id="theme-grid" class="theme-grid"></div>
+      <div id="reading-aspects" class="reading-aspects"></div>
+      <div class="method-note">
+        <strong>How this reading is built</strong>
+        <p>Current planet positions come from the ephemeris. Planet-to-sign influence uses whole-sign relationships because no personal birth degree is collected. Planet-to-planet aspects use actual angular distance and configured orbs. Matching interpretation fragments are pulled from JSON.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <p>Daily Zodiac · astronomical positions + traditional astrology interpretation · entertainment only</p>
+  </footer>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
