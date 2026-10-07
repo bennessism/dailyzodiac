@@ -65,20 +65,69 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
   return parts.length?parts.join(""):"<p>No major configured signal dominates this theme right now, so it can be treated as a quieter background area today.</p>";
 }
 
-function renderFixed(sign,profiles){
-  const p=profiles[sign.id];
-  $("fixed-info").hidden=false;
-  $("fixed-title").textContent=sign.name;
-  $("fixed-symbol").textContent=sign.symbol;
-  $("fixed-profile").textContent=p.profile;
-  $("fixed-strength").textContent=p.strength;
-  $("fixed-challenge").textContent=p.challenge;
-  $("fixed-basics").textContent=p.basics;
+function factButton(label,value,group,key){
+  return `<button type="button" class="fact-button" data-knowledge-group="${group}" data-knowledge-key="${key}">
+    <span class="fact-label">${label}</span>
+    <span class="fact-value">${value}</span>
+    <span class="fact-help" hidden></span>
+  </button>`;
 }
 
-function renderReading({sign,themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles}){
-  renderFixed(sign,profiles);
+function renderFixed(sign,profiles,knowledge){
+  const p=profiles.signs?.[sign.id]||profiles[sign.id];
+  $("fixed-info").hidden=false;
+  $("fixed-title").textContent=`About ${p.name}`;
+  $("fixed-subtitle").textContent=`${p.symbol} ${p.name} · ${p.dateRange}`;
+  $("fixed-symbol").textContent=p.symbol;
+
+  const element=knowledge.elements[p.element];
+  const modality=knowledge.modalities[p.modality];
+  const polarity=knowledge.polarities[p.polarity];
+  const rulerIds=[...(p.rulers?.traditional||[]),...(p.rulers?.modern||[])];
+  const rulerLabel=rulerIds.map(id=>knowledge.rulers[id]?.label||id).join(" · ");
+
+  $("fixed-facts").innerHTML=[
+    factButton("Element",element.label,"elements",p.element),
+    factButton("Modality",modality.label,"modalities",p.modality),
+    factButton("Polarity",`${polarity.label} · ${polarity.traditionalLabel}`,"polarities",p.polarity),
+    ...rulerIds.map(id=>factButton(p.rulers.modern?.includes(id)?"Modern ruler":"Traditional ruler",knowledge.rulers[id].label,"rulers",id)),
+    `<div class="fact-static"><span class="fact-label">Symbol</span><span class="fact-value">${p.representation}</span></div>`
+  ].join("");
+
+  $("fixed-facts").querySelectorAll(".fact-button").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const group=btn.dataset.knowledgeGroup,key=btn.dataset.knowledgeKey;
+      const item=knowledge[group]?.[key];
+      const help=btn.querySelector(".fact-help");
+      const willOpen=help.hidden;
+      $("fixed-facts").querySelectorAll(".fact-help").forEach(el=>el.hidden=true);
+      if(willOpen){help.textContent=item?.explanation||"";help.hidden=false;}
+    });
+  });
+
+  $("fixed-profile").innerHTML=(p.profile||[]).map(x=>`<p>${x}</p>`).join("");
+  $("fixed-strength").textContent=p.strength;
+  $("fixed-challenge").textContent=p.challenge;
+
+  const associations=[
+    ...(p.colors||[]).map(x=>`<span class="association-chip">Color · ${x}</span>`),
+    ...(p.keywords||[]).map(x=>`<span class="association-chip">${x}</span>`)
+  ];
+  $("fixed-associations").innerHTML=associations.join("");
+
+  const hasArchetypes=Array.isArray(p.archetypes)&&p.archetypes.length;
+  $("archetype-section").hidden=!hasArchetypes;
+  if(hasArchetypes){
+    $("archetype-note").textContent=p.archetypeNote||"";
+    $("archetype-list").innerHTML=p.archetypes.map(a=>`<div class="archetype-item"><strong>${a.name}</strong><p>${a.text}</p></div>`).join("");
+  }
+}
+
+function renderReading({sign,themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge}){
+  renderFixed(sign,profiles,knowledge);
   $("reading").hidden=false;
+  $("reading").open=true;
+  $("fixed-info").open=false;
   $("reading-title").textContent=`${sign.name} Daily Zodiac`;
   $("reading-subtitle").textContent=formatDate(date);
   $("sign-symbol").textContent=sign.symbol;
@@ -86,17 +135,18 @@ function renderReading({sign,themes,positioned,aspects,rules,relationStatements,
     const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights});
     return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary})}</article>`;
   }).join("");
-  $("fixed-info").scrollIntoView({behavior:"smooth",block:"start"});
+  $("reading").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 async function main(){
   const date=new Date();
   $("today-date").textContent=formatDate(date);
 
-  const [signData,themeData,aspectData,rules,relationStatements,planetSigns,aspectLibrary,profiles]=await Promise.all([
+  const [signData,themeData,aspectData,rules,relationStatements,planetSigns,aspectLibrary,profiles,knowledge]=await Promise.all([
     loadJson("./data/signs.json"),loadJson("./data/themes.json"),loadJson("./data/aspects.json"),
     loadJson("./data/daily-rules.json"),loadJson("./data/relation-statements.json"),
-    loadJson("./data/planet-signs.json"),loadJson("./data/planet-aspects.json"),loadJson("./data/sign-profiles.json")
+    loadJson("./data/planet-signs.json"),loadJson("./data/planet-aspects.json"),loadJson("./data/sign-profiles.json"),
+    loadJson("./data/sign-knowledge.json")
   ]);
 
   const signs=signData.signs;
@@ -107,7 +157,7 @@ async function main(){
     active=id;
     renderWheel(signs,choose,active);
     const sign=signs.find(s=>s.id===id);
-    renderReading({sign,themes:themeData.themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles});
+    renderReading({sign,themes:themeData.themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge});
   };
 
   renderWheel(signs,choose,active);
