@@ -127,7 +127,7 @@ function renderReading({sign,themes,positioned,aspects,rules,relationStatements,
   renderFixed(sign,profiles,knowledge);
   $("reading").hidden=false;
   $("reading").open=true;
-  $("fixed-info").open=false;
+  $("fixed-info").open=true;
   $("reading-title").textContent=`${sign.name} Daily Zodiac`;
   $("reading-subtitle").textContent=formatDate(date);
   $("sign-symbol").textContent=sign.symbol;
