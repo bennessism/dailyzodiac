@@ -1,4 +1,4 @@
-const CACHE = "dailyzodiac-v2";
+const CACHE = "dailyzodiac-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -15,8 +15,10 @@ const APP_SHELL = [
   "./data/planet-aspects.json",
   "./data/sign-profiles.json",
   "./manifest.webmanifest",
-  "./icons/icon.svg",
-  "./icons/icon-maskable.svg"
+  "./favicon-32x32.png",
+  "./apple-touch-icon.png",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
 self.addEventListener("install", event => {
