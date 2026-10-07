@@ -1,0 +1,40 @@
+{
+  "aspects": [
+    {
+      "id": "conjunction",
+      "label": "Conjunction",
+      "angle": 0,
+      "orb": 8,
+      "nature": "intensifying"
+    },
+    {
+      "id": "sextile",
+      "label": "Sextile",
+      "angle": 60,
+      "orb": 5,
+      "nature": "supportive"
+    },
+    {
+      "id": "square",
+      "label": "Square",
+      "angle": 90,
+      "orb": 6,
+      "nature": "challenging"
+    },
+    {
+      "id": "trine",
+      "label": "Trine",
+      "angle": 120,
+      "orb": 6,
+      "nature": "supportive"
+    },
+    {
+      "id": "opposition",
+      "label": "Opposition",
+      "angle": 180,
+      "orb": 8,
+      "nature": "polarizing"
+    }
+  ],
+  "note": "Initial general-purpose orbs. These are app rules, not an ephemeris value, and can be tuned later."
+}
