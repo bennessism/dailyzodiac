@@ -1,4 +1,4 @@
-const CACHE = "dailyzodiac-v3";
+const CACHE = "dailyzodiac-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -14,6 +14,7 @@ const APP_SHELL = [
   "./data/planet-signs.json",
   "./data/planet-aspects.json",
   "./data/sign-profiles.json",
+  "./data/sign-knowledge.json",
   "./manifest.webmanifest",
   "./favicon-32x32.png",
   "./apple-touch-icon.png",
