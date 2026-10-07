@@ -30,17 +30,20 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .status.ok{color:#efd488}.status.error{color:#ffb7bd}
 
 .sky-list{
-  display:flex;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
   gap:8px;
-  align-items:center
+  align-items:stretch
 }
 .sky-row{
-  display:inline-flex;
+  display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:7px;
+  min-width:0;
+  height:38px;
   white-space:nowrap;
-  padding:8px 11px;
+  padding:7px 10px;
   border:1px solid rgba(216,174,77,.22);
   border-radius:999px;
   background:linear-gradient(180deg,rgba(31,25,18,.96),rgba(19,16,13,.96));
