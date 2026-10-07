@@ -65,6 +65,35 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
   return parts.length?parts.join(""):"<p>No major configured signal dominates this theme right now, so it can be treated as a quieter background area today.</p>";
 }
 
+function dailyRating(sign,themes,positioned,rules){
+  const wanted=[
+    ["overall","Overall"],["love","Love"],["work","Career"],["money","Money"],["energy","Energy"]
+  ];
+  const relationScore={trine:1,sextile:.65,conjunction:.2,neutral:0,square:-.8,opposition:-.9};
+  return wanted.map(([id,label])=>{
+    const theme=themes.find(t=>t.id===id);
+    const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights})
+      .filter(s=>theme.planets.includes(s.id));
+    let total=0,weight=0;
+    signals.slice(0,4).forEach((s,i)=>{
+      const w=4-i;
+      total+=(relationScore[s.relation]??0)*w;
+      weight+=w;
+    });
+    const normalized=weight?total/weight:0;
+    const stars=Math.max(1,Math.min(5,Math.round(3+normalized*2)));
+    return {label,stars};
+  });
+}
+
+function renderDailyRating(sign,themes,positioned,rules){
+  $("daily-rating-grid").innerHTML=dailyRating(sign,themes,positioned,rules).map(item=>`
+    <div class="rating-item">
+      <span class="rating-label">${item.label}</span>
+      <span class="rating-stars" aria-label="${item.stars} out of 5 stars">${"★".repeat(item.stars)}${"☆".repeat(5-item.stars)}</span>
+    </div>`).join("");
+}
+
 function factButton(label,value,group,key){
   return `<button type="button" class="fact-button" data-knowledge-group="${group}" data-knowledge-key="${key}">
     <span class="fact-label">${label}</span>
@@ -131,6 +160,7 @@ function renderReading({sign,themes,positioned,aspects,rules,relationStatements,
   $("reading-title").textContent=`${sign.name} Daily Zodiac`;
   $("reading-subtitle").textContent=formatDate(date);
   $("sign-symbol").textContent=sign.symbol;
+  renderDailyRating(sign,themes,positioned,rules);
   $("theme-grid").innerHTML=themes.map(theme=>{
     const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights});
     return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary})}</article>`;
