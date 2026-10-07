@@ -1,0 +1,40 @@
+{
+  "bodies": [
+    "sun",
+    "moon",
+    "mercury",
+    "venus",
+    "mars",
+    "jupiter",
+    "saturn",
+    "uranus",
+    "neptune",
+    "pluto"
+  ],
+  "signs": [
+    "aries",
+    "taurus",
+    "gemini",
+    "cancer",
+    "leo",
+    "virgo",
+    "libra",
+    "scorpio",
+    "sagittarius",
+    "capricorn",
+    "aquarius",
+    "pisces"
+  ],
+  "themes": [
+    "overall",
+    "love",
+    "work",
+    "money",
+    "communication",
+    "social",
+    "energy",
+    "advice"
+  ],
+  "entries": {},
+  "note": "Target coverage is 120 planet-in-sign records. Each record can contain only the themes that are genuinely useful for that planet."
+}
