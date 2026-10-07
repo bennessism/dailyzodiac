@@ -1,0 +1,101 @@
+{
+  "zodiac": "tropical",
+  "signs": [
+    {
+      "id": "aries",
+      "name": "Aries",
+      "symbol": "♈",
+      "element": "fire",
+      "modality": "cardinal",
+      "index": 0
+    },
+    {
+      "id": "taurus",
+      "name": "Taurus",
+      "symbol": "♉",
+      "element": "earth",
+      "modality": "fixed",
+      "index": 1
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "symbol": "♊",
+      "element": "air",
+      "modality": "mutable",
+      "index": 2
+    },
+    {
+      "id": "cancer",
+      "name": "Cancer",
+      "symbol": "♋",
+      "element": "water",
+      "modality": "cardinal",
+      "index": 3
+    },
+    {
+      "id": "leo",
+      "name": "Leo",
+      "symbol": "♌",
+      "element": "fire",
+      "modality": "fixed",
+      "index": 4
+    },
+    {
+      "id": "virgo",
+      "name": "Virgo",
+      "symbol": "♍",
+      "element": "earth",
+      "modality": "mutable",
+      "index": 5
+    },
+    {
+      "id": "libra",
+      "name": "Libra",
+      "symbol": "♎",
+      "element": "air",
+      "modality": "cardinal",
+      "index": 6
+    },
+    {
+      "id": "scorpio",
+      "name": "Scorpio",
+      "symbol": "♏",
+      "element": "water",
+      "modality": "fixed",
+      "index": 7
+    },
+    {
+      "id": "sagittarius",
+      "name": "Sagittarius",
+      "symbol": "♐",
+      "element": "fire",
+      "modality": "mutable",
+      "index": 8
+    },
+    {
+      "id": "capricorn",
+      "name": "Capricorn",
+      "symbol": "♑",
+      "element": "earth",
+      "modality": "cardinal",
+      "index": 9
+    },
+    {
+      "id": "aquarius",
+      "name": "Aquarius",
+      "symbol": "♒",
+      "element": "air",
+      "modality": "fixed",
+      "index": 10
+    },
+    {
+      "id": "pisces",
+      "name": "Pisces",
+      "symbol": "♓",
+      "element": "water",
+      "modality": "mutable",
+      "index": 11
+    }
+  ]
+}
