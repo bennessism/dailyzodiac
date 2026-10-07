@@ -61,18 +61,55 @@ function renderSky(positioned, aspects) {
     : `<p class="muted">No configured major aspects are within orb at this moment.</p>`;
 }
 
-function buildThemeText(theme, signals, relationStatements) {
-  const useful = signals.filter(s => s.relation !== "neutral").slice(0, 3);
-  if (!useful.length) {
-    return "No major whole-sign signal dominates this theme right now, so it can be treated as a quieter background area today.";
-  }
+function aspectInterpretation(item, themeId, aspectLibrary) {
+  const key = `${item.planetA.id}_${item.planetB.id}`;
+  const record = aspectLibrary.entries?.[key]?.[item.aspect.id];
+  return record?.[themeId] || record?.overall || "";
+}
 
-  return useful.map(signal => {
-    const base = relationStatements[signal.relation]?.[theme.id]
+function buildThemeText({
+  theme,
+  signals,
+  relationStatements,
+  planetSigns,
+  aspects,
+  aspectLibrary
+}) {
+  const useful = signals.filter(s => s.relation !== "neutral").slice(0, 3);
+  const paragraphs = [];
+
+  for (const signal of useful) {
+    const placement = planetSigns.entries?.[`${signal.id}_${signal.sign.id}`];
+    const placementText = placement?.[theme.id] || placement?.overall || "";
+    const relationText = relationStatements[signal.relation]?.[theme.id]
       || relationStatements[signal.relation]?.overall
       || "";
-    return `${signal.name} in ${signal.sign.name}: ${base}`;
-  }).join(" ");
+
+    if (placementText || relationText) {
+      paragraphs.push(
+        `<strong>${signal.name} in ${signal.sign.name} · ${titleCase(signal.relation)}</strong> ${placementText} ${relationText}`
+      );
+    }
+  }
+
+  const relevantAspects = aspects
+    .filter(item => theme.planets.includes(item.planetA.id) || theme.planets.includes(item.planetB.id))
+    .slice(0, 2);
+
+  for (const item of relevantAspects) {
+    const text = aspectInterpretation(item, theme.id, aspectLibrary);
+    if (text) {
+      paragraphs.push(
+        `<strong>${item.planetA.name} ${item.aspect.label} ${item.planetB.name}</strong> ${text}`
+      );
+    }
+  }
+
+  if (!paragraphs.length) {
+    return "<p>No major configured signal dominates this theme right now, so it can be treated as a quieter background area today.</p>";
+  }
+
+  return paragraphs.map(p => `<p>${p}</p>`).join("");
 }
 
 function renderReading({
@@ -82,6 +119,8 @@ function renderReading({
   aspects,
   rules,
   relationStatements,
+  planetSigns,
+  aspectLibrary,
   date
 }) {
   $("reading").hidden = false;
@@ -96,22 +135,35 @@ function renderReading({
       theme,
       relationWeights: rules.relationWeights
     });
-    const text = buildThemeText(theme, signals, relationStatements);
+    const text = buildThemeText({
+      theme,
+      signals,
+      relationStatements,
+      planetSigns,
+      aspects,
+      aspectLibrary
+    });
     return `
       <article class="theme-card">
         <h3>${theme.label}</h3>
-        <p>${text}</p>
+        ${text}
       </article>
     `;
   }).join("");
 
   $("reading-aspects").innerHTML = aspects.length
-    ? `<h3>Today’s strongest sky aspects</h3>` + aspects.slice(0, 5).map(item => `
-        <div class="aspect-row">
-          <span>${item.planetA.name} ${item.aspect.label.toLowerCase()} ${item.planetB.name}</span>
-          <span>${item.aspect.nature} · orb ${item.aspect.delta.toFixed(2)}°</span>
-        </div>
-      `).join("")
+    ? `<h3>Today’s strongest sky aspects</h3>` + aspects.slice(0, 5).map(item => {
+        const interpretation = aspectInterpretation(item, "overall", aspectLibrary);
+        return `
+          <div class="aspect-row">
+            <span>
+              <strong>${item.planetA.name} ${item.aspect.label.toLowerCase()} ${item.planetB.name}</strong>
+              ${interpretation ? `<br><small>${interpretation}</small>` : ""}
+            </span>
+            <span>${item.aspect.nature} · orb ${item.aspect.delta.toFixed(2)}°</span>
+          </div>
+        `;
+      }).join("")
     : "";
 
   $("reading").scrollIntoView({ behavior:"smooth", block:"start" });
@@ -126,13 +178,17 @@ async function main() {
     themeData,
     aspectData,
     rules,
-    relationStatements
+    relationStatements,
+    planetSigns,
+    aspectLibrary
   ] = await Promise.all([
     loadJson("./data/signs.json"),
     loadJson("./data/themes.json"),
     loadJson("./data/aspects.json"),
     loadJson("./data/daily-rules.json"),
-    loadJson("./data/relation-statements.json")
+    loadJson("./data/relation-statements.json"),
+    loadJson("./data/planet-signs.json"),
+    loadJson("./data/planet-aspects.json")
   ]);
 
   const signs = signData.signs;
@@ -161,6 +217,8 @@ async function main() {
         aspects,
         rules,
         relationStatements,
+        planetSigns,
+        aspectLibrary,
         date
       });
     });
