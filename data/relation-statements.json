@@ -1,0 +1,62 @@
+{
+  "conjunction": {
+    "overall": "This planet is moving through your sign, so its traditional themes receive extra emphasis today.",
+    "love": "This influence is close to your sign and may feel more immediate in relationship matters.",
+    "work": "This influence can make its work-related themes feel more personal and noticeable.",
+    "money": "Its values and resource themes may deserve closer attention today.",
+    "communication": "Its message is close to your sign, making the related thoughts or conversations easier to notice.",
+    "social": "Its social tone may feel more immediate or personally relevant.",
+    "energy": "Its drive can feel close at hand; use it deliberately rather than automatically.",
+    "advice": "Notice where this influence is already asking for your attention."
+  },
+  "sextile": {
+    "overall": "This planet forms a supportive whole-sign relationship with your sign, traditionally associated with openings that respond well to participation.",
+    "love": "There is a supportive tone here; connection may benefit from a small but intentional effort.",
+    "work": "This influence can support progress when you actively use the opportunity rather than waiting for it.",
+    "money": "A practical opening may be available, especially when choices remain measured.",
+    "communication": "Conversation and exchange may move more easily when you make the first useful step.",
+    "social": "Social interaction can feel lighter or more cooperative.",
+    "energy": "The energy is supportive without being forceful; initiative still matters.",
+    "advice": "Use the opening rather than assuming it will act for you."
+  },
+  "square": {
+    "overall": "This planet forms a challenging whole-sign relationship with your sign, traditionally linked with pressure, adjustment and action.",
+    "love": "Relationship themes may need more patience or clearer boundaries than usual.",
+    "work": "Friction can reveal where a plan, expectation or workload needs adjustment.",
+    "money": "Avoid letting pressure turn into an impulsive financial choice.",
+    "communication": "Different priorities may create friction; clarity is more useful than winning the exchange.",
+    "social": "Stronger personalities or conflicting expectations may require tact.",
+    "energy": "There is usable drive here, but it can become impatience if it has no clear direction.",
+    "advice": "Treat tension as information about what needs adjustment."
+  },
+  "trine": {
+    "overall": "This planet forms a flowing whole-sign relationship with your sign, traditionally associated with ease and natural support.",
+    "love": "Relationship themes may feel easier to express or understand.",
+    "work": "Skills or existing strengths may be easier to use productively.",
+    "money": "A steadier flow can help, but ease should not replace good judgment.",
+    "communication": "Ideas and expression may connect more naturally.",
+    "social": "Social interaction may require less effort than usual.",
+    "energy": "Motivation may move more naturally when directed toward something constructive.",
+    "advice": "Use what comes easily today instead of overlooking it."
+  },
+  "opposition": {
+    "overall": "This planet sits opposite your sign by whole-sign relationship, traditionally highlighting balance, contrast and other people's perspectives.",
+    "love": "Relationship matters may highlight a difference between your needs and another person's.",
+    "work": "Competing priorities can make balance and negotiation more important.",
+    "money": "A choice may involve balancing immediate wants against another obligation.",
+    "communication": "Another viewpoint may be especially visible; listening can be as useful as explaining.",
+    "social": "Other people can act as a mirror for what you are emphasizing or overlooking.",
+    "energy": "Avoid swinging between extremes; a balanced response is more useful.",
+    "advice": "Look at the other side before deciding what the situation means."
+  },
+  "neutral": {
+    "overall": "This placement is part of today's background sky but does not form one of the five major whole-sign relationships to your sign.",
+    "love": "Its relationship influence is secondary today.",
+    "work": "Its work influence is more background than dominant.",
+    "money": "Its money influence is secondary today.",
+    "communication": "Its communication influence is subtle rather than dominant.",
+    "social": "Its social influence remains in the background.",
+    "energy": "Its motivational influence is secondary today.",
+    "advice": "Keep this influence in perspective rather than forcing a meaning from it."
+  }
+}
