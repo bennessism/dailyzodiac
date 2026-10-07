@@ -27,11 +27,11 @@ function renderWheel(signs,onSelect,active=null){
 }
 
 function renderSky(positioned){
-  $("sky-grid").innerHTML=positioned.map(p=>`<article class="sky-card">
+  $("sky-list").innerHTML=positioned.map(p=>`<div class="sky-row">
     <strong>${p.name}</strong>
-    <span>${p.sign.symbol} ${p.sign.name}</span>
-    <small>${formatDegree(p.sign.degree)}</small>
-  </article>`).join("");
+    <span class="sky-sign">${p.sign.symbol} ${p.sign.name}</span>
+    <span class="sky-degree">${formatDegree(p.sign.degree)}</span>
+  </div>`).join("");
 }
 
 function aspectInterpretation(item,themeId,library){
@@ -41,7 +41,6 @@ function aspectInterpretation(item,themeId,library){
 }
 
 function renderSharedAspects(aspects,library){
-  $("shared-aspects").hidden=false;
   $("aspect-list").innerHTML=aspects.length
     ? aspects.slice(0,8).map(item=>{
         const copy=aspectInterpretation(item,"overall",library);
