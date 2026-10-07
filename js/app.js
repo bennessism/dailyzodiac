@@ -16,7 +16,7 @@ function renderWheel(signs,onSelect,active=null){
   wheel.innerHTML=signs.map((sign,i)=>{
     const a=(-90+i*30)*Math.PI/180;
     const x=Math.cos(a)*radius, y=Math.sin(a)*radius;
-    return `<div class="sign-node" style="transform:translate(${x}px,${y}px)">
+    return `<div class="sign-node" style="transform:translate(-50%,-50%) translate(${x}px,${y}px)">
       <button class="sign-button ${active===sign.id?"active":""}" data-sign="${sign.id}" aria-label="${sign.name}">
         <span class="sign-glyph">${sign.symbol}</span>
       </button>
@@ -63,10 +63,6 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
     const ptxt=placement?.[theme.id]||placement?.overall||"";
     const rtxt=relationStatements[signal.relation]?.[theme.id]||relationStatements[signal.relation]?.overall||"";
     if(ptxt||rtxt) parts.push(`<p><strong>${signal.name} in ${signal.sign.name} · ${titleCase(signal.relation)}</strong>${ptxt} ${rtxt}</p>`);
-  }
-  for(const item of aspects.filter(a=>theme.planets.includes(a.planetA.id)||theme.planets.includes(a.planetB.id)).slice(0,2)){
-    const txt=aspectInterpretation(item,theme.id,aspectLibrary);
-    if(txt) parts.push(`<p><strong>${item.planetA.name} ${item.aspect.label} ${item.planetB.name}</strong>${txt}</p>`);
   }
   return parts.length?parts.join(""):"<p>No major configured signal dominates this theme right now, so it can be treated as a quieter background area today.</p>";
 }
