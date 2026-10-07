@@ -1,0 +1,24 @@
+{
+  "schema": {
+    "key": "planetA_planetB",
+    "aspects": [
+      "conjunction",
+      "sextile",
+      "square",
+      "trine",
+      "opposition"
+    ],
+    "themes": [
+      "overall",
+      "love",
+      "work",
+      "money",
+      "communication",
+      "social",
+      "energy",
+      "advice"
+    ]
+  },
+  "entries": {},
+  "note": "Specific pair-by-aspect interpretations will be filled as the core content library. The engine may show factual aspect names before a written interpretation exists."
+}
