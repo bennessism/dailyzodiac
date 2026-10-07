@@ -57,13 +57,14 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .sky-degree{color:var(--muted);font-size:.86rem;font-variant-numeric:tabular-nums}
 
 .shared-details{margin-top:24px;border-top:1px solid rgba(216,174,77,.18);padding-top:18px}
-.shared-details summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:18px;align-items:center;padding:14px 0}
+.shared-details summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:14px 0}
 .shared-details summary::-webkit-details-marker{display:none}
 .shared-details summary small{display:block;text-transform:uppercase;letter-spacing:.12em;color:#e6ad3c;font-size:.7rem;margin-bottom:3px}
 .shared-details summary strong{color:var(--gold2);font-size:1.08rem}
-.summary-hint{color:var(--muted);font-size:.85rem}
+.summary-hint{align-self:flex-end;color:var(--muted);font-size:.85rem;line-height:1.2}
+.summary-title{display:block;width:100%}
 .shared-details[open] .summary-hint{font-size:0}
-.shared-details[open] .summary-hint::after{content:"Close details";font-size:.85rem}
+.shared-details[open] .summary-hint::after{content:"Close";font-size:.85rem}
 .shared-content{padding:6px 0 2px}
 
 .aspect-list{display:grid;gap:0}
@@ -148,23 +149,27 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
   .sign-node{width:58px;height:58px}.sign-glyph{font-size:1.75rem}.sign-label{top:calc(50% + 28px);font-size:.65rem}
   
   .aspect-title{display:block}.aspect-meta{display:block;margin-top:4px}
-  .shared-details summary{align-items:flex-start}
 }
 .sign-details{position:relative}
 .sign-details>summary.detail-toggle{
   list-style:none;
   display:flex;
-  justify-content:flex-end;
-  align-items:center;
+  flex-direction:column;
+  align-items:stretch;
   min-height:24px;
   margin:-4px 0 12px;
   cursor:pointer;
   color:var(--muted);
   font-size:.85rem
 }
+.sign-details>summary .detail-toggle-text{align-self:flex-end;line-height:1.2;margin-bottom:8px}
+.sign-details>summary .reading-head{display:flex;width:100%;margin:0;align-items:flex-start}
+.sign-details>summary .eyebrow{display:block}
+.summary-heading{display:block;font-size:clamp(1.55rem,4vw,2.35rem);line-height:1.2;font-weight:700;color:var(--gold2)}
+.summary-subtitle{display:block;margin-top:6px}
 .sign-details>summary.detail-toggle::-webkit-details-marker{display:none}
 .sign-details[open]>summary .detail-toggle-text{font-size:0}
-.sign-details[open]>summary .detail-toggle-text::after{content:"Close details";font-size:.85rem}
+.sign-details[open]>summary .detail-toggle-text::after{content:"Close";font-size:.85rem}
 .sign-details:not([open])>.detail-body{display:none}
 .fact-grid{
   display:grid;
