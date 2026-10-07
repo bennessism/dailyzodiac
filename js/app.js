@@ -72,8 +72,7 @@ function dailyRating(sign,themes,positioned,rules){
   const relationScore={trine:1,sextile:.65,conjunction:.2,neutral:0,square:-.8,opposition:-.9};
   return wanted.map(([id,label])=>{
     const theme=themes.find(t=>t.id===id);
-    const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights})
-      .filter(s=>theme.planets.includes(s.id));
+    const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights});
     let total=0,weight=0;
     signals.slice(0,4).forEach((s,i)=>{
       const w=4-i;
