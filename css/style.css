@@ -219,3 +219,8 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .rating-stars{display:block;color:var(--gold2);font-size:1.02rem;letter-spacing:.03em;white-space:nowrap}
 .rating-note{margin:12px 0 0;color:var(--muted);font-size:.82rem;line-height:1.55}
 @media(max-width:680px){.rating-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rating-item:first-child{grid-column:1/-1}}
+
+.today-head{display:block}
+.today-head .eyebrow{margin-bottom:8px}
+.today-head h2{margin-bottom:6px}
+.today-date{display:block;width:100%;margin:0}
