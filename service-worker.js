@@ -1,4 +1,4 @@
-const CACHE = "dailyzodiac-v6";
+const CACHE = "dailyzodiac-v7";
 const APP_SHELL = [
   "./",
   "./index.html",
