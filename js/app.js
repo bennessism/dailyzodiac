@@ -77,8 +77,8 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
   if(!top)return base;
   const interpretation=aspectInterpretation(top,theme.id,aspectLibrary);
   if(!interpretation)return base;
-  const signContext=`For ${sign.name}, this is a shared sky influence interpreted alongside the sign relationships below, not a personal birth-chart prediction.`;
-  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} (orb ${top.aspect.delta.toFixed(2)}°)</strong>${interpretation} ${signContext}</p>`;
+  const signContext=`This aspect is shared by all signs. For ${sign.name}, the whole-sign placements below add the sign-level context; no individual birth chart is used.`;
+  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} in ${top.planetA.sign.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} in ${top.planetB.sign.name}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${interpretation} ${signContext}</p>`;
   return highlight+base;
 }
 
@@ -105,16 +105,23 @@ function dailyRating(sign,themes,positioned,rules,aspects){
     const adjustment=current.length?current.reduce((sum,a)=>
       sum+(aspectValue[a.aspect.id]??0)*a.exactness,0)/current.length:0;
     const stars=Math.max(1,Math.min(5,Math.round(3+normalized*1.6+adjustment*.8)));
-    return {label,stars};
+    return {label,stars,normalized,adjustment,usedSignals:signals.slice(0,4),current};
   });
 }
 
 function renderDailyRating(sign,themes,positioned,rules,aspects){
-  $("daily-rating-grid").innerHTML=dailyRating(sign,themes,positioned,rules,aspects).map(item=>`
+  const results=dailyRating(sign,themes,positioned,rules,aspects);
+  $("daily-rating-grid").innerHTML=results.map(item=>`
     <div class="rating-item">
       <span class="rating-label">${item.label}</span>
       <span class="rating-stars" aria-label="${item.stars} out of 5 stars">${"★".repeat(item.stars)}${"☆".repeat(5-item.stars)}</span>
     </div>`).join("");
+  const details=$("rating-method-details");
+  if(details)details.innerHTML=results.map(item=>{
+    const relations=item.usedSignals.map(s=>`${s.name} in ${s.sign.name} (${s.relation})`).join("; ")||"none";
+    const influences=item.current.map(a=>`${a.planetA.name} ${a.aspect.label.toLowerCase()} ${a.planetB.name} (orb ${a.aspect.delta.toFixed(2)}°)`).join("; ")||"none within configured orb";
+    return `<p><strong>${item.label}: ${item.stars}/5</strong> · Sign relationships: ${relations}. Degree-based aspects: ${influences}. Whole-sign component ${item.normalized.toFixed(2)}, aspect adjustment ${item.adjustment.toFixed(2)}.</p>`;
+  }).join("");
 }
 
 function factButton(label,value,group,key){
@@ -184,6 +191,11 @@ function renderReading({sign,themes,positioned,aspects,rules,relationStatements,
   $("reading-subtitle").textContent=formatDate(date);
   $("sign-symbol").textContent=sign.symbol;
   renderDailyRating(sign,themes,positioned,rules,aspects);
+  const moon=positioned.find(p=>p.id==="moon");
+  const dailySky=$("sign-daily-sky");
+  if(dailySky)dailySky.textContent=moon
+    ?`Calculated for ${formatDate(date)} · Moon in ${moon.sign.name} at ${formatDegree(moon.sign.degree)} · Sky calculated ${new Intl.DateTimeFormat(undefined,{hour:"numeric",minute:"2-digit",timeZoneName:"short"}).format(date)}.`
+    :`Calculated for ${formatDate(date)} using current ephemeris positions.`;
   $("theme-grid").innerHTML=themes.map(theme=>{
     const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights});
     return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign})}</article>`;
