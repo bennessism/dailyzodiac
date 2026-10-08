@@ -55,7 +55,17 @@ function renderSharedAspects(aspects,library){
     : '<p class="muted">No configured major aspects are within orb at this moment.</p>';
 }
 
-function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign}){
+function aspectKey(a){ return [a.planetA.id,a.planetB.id].sort().join("_")+":"+a.aspect.id; }
+function movementText(item,prior){
+  const yesterday=prior?.get(aspectKey(item));
+  if(!yesterday)return "This aspect is within its configured orb now; it was not active at the comparison time yesterday.";
+  const diff=yesterday.aspect.delta-item.aspect.delta;
+  if(diff>0.05)return `Its orb has narrowed by ${diff.toFixed(2)}° since the same time yesterday, so the aspect is closer to exactness.`;
+  if(diff<-.05)return `Its orb has widened by ${Math.abs(diff).toFixed(2)}° since the same time yesterday, so the aspect is farther from exactness.`;
+  return "Its orb is nearly unchanged since the same time yesterday.";
+}
+
+function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign,priorAspects}){
   const parts=[];
   for(const signal of signals.filter(s=>s.relation!=="neutral").slice(0,3)){
     const placement=planetSigns.entries?.[`${signal.id}_${signal.sign.id}`];
@@ -67,18 +77,19 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
   // connections and aspects involving planets assigned to this reading theme.
   const candidates=aspects.filter(item=>theme.planets.includes(item.planetA.id)||theme.planets.includes(item.planetB.id))
     .map(item=>{
-      const relationA=signals.find(signal=>signal.id===item.planetA.id)?.relation;
-      const relationB=signals.find(signal=>signal.id===item.planetB.id)?.relation;
-      const involved=relationA&&relationA!=="neutral"||relationB&&relationB!=="neutral";
-      const lunar=item.planetA.id==="moon"||item.planetB.id==="moon";
-      return {item,score:item.exactness*2+(lunar?1.1:0)+(involved?.6:0)};
-    }).sort((a,b)=>b.score-a.score);
+      const interpretation=aspectInterpretation(item,theme.id,aspectLibrary);
+      const relevant=(theme.planets.includes(item.planetA.id)?1:0)+(theme.planets.includes(item.planetB.id)?1:0);
+      const yesterday=priorAspects?.get(aspectKey(item));
+      const dailyChange=yesterday?Math.abs(yesterday.aspect.delta-item.aspect.delta):0;
+      const fast=["moon","mercury","venus","mars","sun"].includes(item.planetA.id)||
+                 ["moon","mercury","venus","mars","sun"].includes(item.planetB.id);
+      return {item,interpretation,score:relevant*1.5+item.exactness+Math.min(dailyChange,2)*.6+(fast?.8:0)};
+    }).filter(x=>x.interpretation).sort((a,b)=>b.score-a.score);
   const top=candidates[0]?.item;
   if(!top)return base;
-  const interpretation=aspectInterpretation(top,theme.id,aspectLibrary);
-  if(!interpretation)return base;
+  const interpretation=candidates[0].interpretation;
   const signContext=`This aspect is shared by all signs. For ${sign.name}, the whole-sign placements below add the sign-level context; no individual birth chart is used.`;
-  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} in ${top.planetA.sign.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} in ${top.planetB.sign.name}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${interpretation} ${signContext}</p>`;
+  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} in ${top.planetA.sign.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} in ${top.planetB.sign.name}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${interpretation} ${priorAspects?movementText(top,priorAspects):""} ${signContext}</p>`;
   return highlight+base;
 }
 
@@ -105,7 +116,7 @@ function dailyRating(sign,themes,positioned,rules,aspects){
     const adjustment=current.length?current.reduce((sum,a)=>
       sum+(aspectValue[a.aspect.id]??0)*a.exactness,0)/current.length:0;
     const stars=Math.max(1,Math.min(5,Math.round(3+normalized*1.6+adjustment*.8)));
-    return {label,stars,normalized,adjustment,usedSignals:signals.slice(0,4),current};
+    return {label,stars,normalized,adjustment,signContribution:normalized*1.6,aspectContribution:adjustment*.8,raw:3+normalized*1.6+adjustment*.8,usedSignals:signals.slice(0,4),current};
   });
 }
 
@@ -120,7 +131,7 @@ function renderDailyRating(sign,themes,positioned,rules,aspects){
   if(details)details.innerHTML=results.map(item=>{
     const relations=item.usedSignals.map(s=>`${s.name} in ${s.sign.name} (${s.relation})`).join("; ")||"none";
     const influences=item.current.map(a=>`${a.planetA.name} ${a.aspect.label.toLowerCase()} ${a.planetB.name} (orb ${a.aspect.delta.toFixed(2)}°)`).join("; ")||"none within configured orb";
-    return `<p><strong>${item.label}: ${item.stars}/5</strong> · Sign relationships: ${relations}. Degree-based aspects: ${influences}. Whole-sign component ${item.normalized.toFixed(2)}, aspect adjustment ${item.adjustment.toFixed(2)}.</p>`;
+    return `<p><strong>${item.label}: ${item.stars}/5</strong> · Sign relationships: ${relations}. Degree-based aspects: ${influences}. Base 3.00 + sign contribution ${item.signContribution.toFixed(2)} (weighted score ${item.normalized.toFixed(2)} × 1.6) + aspect contribution ${item.aspectContribution.toFixed(2)} (mean exactness-adjusted score ${item.adjustment.toFixed(2)} × 0.8) = ${item.raw.toFixed(2)}, rounded and limited to 1–5. Aspects use their own configured orb limits.</p>`;
   }).join("");
 }
 
@@ -182,11 +193,10 @@ function renderFixed(sign,profiles,knowledge){
   }
 }
 
-function renderReading({sign,themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge,scroll=true}){
+function renderReading({sign,themes,positioned,aspects,priorAspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge,scroll=true}){
   renderFixed(sign,profiles,knowledge);
   $("reading").hidden=false;
-  $("reading").open=true;
-  $("fixed-info").open=true;
+  if(scroll){$("reading").open=true;$("fixed-info").open=true;}
   $("reading-title").textContent=`${sign.name} Daily Zodiac`;
   $("reading-subtitle").textContent=formatDate(date);
   $("sign-symbol").textContent=sign.symbol;
@@ -198,7 +208,7 @@ function renderReading({sign,themes,positioned,aspects,rules,relationStatements,
     :`Calculated for ${formatDate(date)} using current ephemeris positions.`;
   $("theme-grid").innerHTML=themes.map(theme=>{
     const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights});
-    return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign})}</article>`;
+    return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign,priorAspects})}</article>`;
   }).join("");
   if(scroll)$("reading").scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -215,7 +225,7 @@ async function main(){
   ]);
 
   const signs=signData.signs;
-  let positioned=[],aspects=[],active=null;
+  let positioned=[],aspects=[],priorAspects=null,active=null;
   let refreshingSky=false;
   let skyDay=date.toDateString();
 
@@ -224,7 +234,7 @@ async function main(){
     active=id;
     renderWheel(signs,choose,active);
     const sign=signs.find(s=>s.id===id);
-    renderReading({sign,themes:themeData.themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge});
+    renderReading({sign,themes:themeData.themes,positioned,aspects,priorAspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge});
   };
 
   renderWheel(signs,choose,active);
@@ -240,6 +250,16 @@ async function main(){
       $("today-date").textContent=formatDate(now);
       positioned=sky.positions.map(p=>({...p,sign:signForLongitude(p.longitude,signs)}));
       aspects=detectAspects(positioned,aspectData.aspects);
+      // Compare against the same local clock time on the preceding calendar day.
+      // Comparison failure never substitutes invented data for the live sky.
+      priorAspects=null;
+      try {
+        const previous=new Date(now);
+        previous.setDate(previous.getDate()-1);
+        const earlier=await calculateCurrentSky(previous);
+        const previousPositions=earlier.positions.map(p=>({...p,sign:signForLongitude(p.longitude,signs)}));
+        priorAspects=new Map(detectAspects(previousPositions,aspectData.aspects).map(a=>[aspectKey(a),a]));
+      } catch(error){ console.warn("Previous-day comparison unavailable",error); }
       $("engine-status").className="status ok";
       $("engine-status").textContent=`Ephemeris ready · ${sky.engine} · ${sky.ephemeris} · source: ${sky.engineSource}`;
       renderSky(positioned);
@@ -247,7 +267,7 @@ async function main(){
       renderWheel(signs,choose,active);
       if(active){
         const sign=signs.find(s=>s.id===active);
-        if(sign)renderReading({sign,themes:themeData.themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge,scroll:false});
+        if(sign)renderReading({sign,themes:themeData.themes,positioned,aspects,priorAspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge,scroll:false});
       }
     }catch(e){
       console.error(e);
