@@ -55,17 +55,34 @@ function renderSharedAspects(aspects,library){
     : '<p class="muted">No configured major aspects are within orb at this moment.</p>';
 }
 
-function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary}){
+function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign}){
   const parts=[];
   for(const signal of signals.filter(s=>s.relation!=="neutral").slice(0,3)){
     const placement=planetSigns.entries?.[`${signal.id}_${signal.sign.id}`];
     const ptxt=placement?.[theme.id]||placement?.overall||"";
     if(ptxt) parts.push(`<p><strong>${signal.name} in ${signal.sign.name} · ${titleCase(signal.relation)}</strong>${ptxt}</p>`);
   }
-  return parts.length?parts.join(""):"<p>No major configured signal dominates this theme right now, so it can be treated as a quieter background area today.</p>";
+  const base=parts.length?parts.join(""):"<p>No major configured whole-sign signal dominates this theme right now.</p>";
+  // Aspect changes depend on exact planetary degrees. Prefer fast-changing Moon
+  // connections and aspects involving planets assigned to this reading theme.
+  const candidates=aspects.filter(item=>theme.planets.includes(item.planetA.id)||theme.planets.includes(item.planetB.id))
+    .map(item=>{
+      const relationA=signals.find(signal=>signal.id===item.planetA.id)?.relation;
+      const relationB=signals.find(signal=>signal.id===item.planetB.id)?.relation;
+      const involved=relationA&&relationA!=="neutral"||relationB&&relationB!=="neutral";
+      const lunar=item.planetA.id==="moon"||item.planetB.id==="moon";
+      return {item,score:item.exactness*2+(lunar?1.1:0)+(involved?.6:0)};
+    }).sort((a,b)=>b.score-a.score);
+  const top=candidates[0]?.item;
+  if(!top)return base;
+  const interpretation=aspectInterpretation(top,theme.id,aspectLibrary);
+  if(!interpretation)return base;
+  const signContext=`For ${sign.name}, this is a shared sky influence interpreted alongside the sign relationships below, not a personal birth-chart prediction.`;
+  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} (orb ${top.aspect.delta.toFixed(2)}°)</strong>${interpretation} ${signContext}</p>`;
+  return highlight+base;
 }
 
-function dailyRating(sign,themes,positioned,rules){
+function dailyRating(sign,themes,positioned,rules,aspects){
   const wanted=[
     ["overall","Overall"],["love","Love"],["work","Career"],["money","Money"],["energy","Energy"]
   ];
@@ -80,13 +97,20 @@ function dailyRating(sign,themes,positioned,rules){
       weight+=w;
     });
     const normalized=weight?total/weight:0;
-    const stars=Math.max(1,Math.min(5,Math.round(3+normalized*2)));
+    // A small degree-based adjustment makes the indicator responsive without
+    // overwhelming its traditional whole-sign foundation.
+    const aspectValue={trine:1,sextile:.7,conjunction:.15,square:-.8,opposition:-.9};
+    const current=aspects.filter(a=>theme.planets.includes(a.planetA.id)||theme.planets.includes(a.planetB.id))
+      .sort((a,b)=>b.exactness-a.exactness).slice(0,3);
+    const adjustment=current.length?current.reduce((sum,a)=>
+      sum+(aspectValue[a.aspect.id]??0)*a.exactness,0)/current.length:0;
+    const stars=Math.max(1,Math.min(5,Math.round(3+normalized*1.6+adjustment*.8)));
     return {label,stars};
   });
 }
 
-function renderDailyRating(sign,themes,positioned,rules){
-  $("daily-rating-grid").innerHTML=dailyRating(sign,themes,positioned,rules).map(item=>`
+function renderDailyRating(sign,themes,positioned,rules,aspects){
+  $("daily-rating-grid").innerHTML=dailyRating(sign,themes,positioned,rules,aspects).map(item=>`
     <div class="rating-item">
       <span class="rating-label">${item.label}</span>
       <span class="rating-stars" aria-label="${item.stars} out of 5 stars">${"★".repeat(item.stars)}${"☆".repeat(5-item.stars)}</span>
@@ -151,7 +175,7 @@ function renderFixed(sign,profiles,knowledge){
   }
 }
 
-function renderReading({sign,themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge}){
+function renderReading({sign,themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge,scroll=true}){
   renderFixed(sign,profiles,knowledge);
   $("reading").hidden=false;
   $("reading").open=true;
@@ -159,16 +183,16 @@ function renderReading({sign,themes,positioned,aspects,rules,relationStatements,
   $("reading-title").textContent=`${sign.name} Daily Zodiac`;
   $("reading-subtitle").textContent=formatDate(date);
   $("sign-symbol").textContent=sign.symbol;
-  renderDailyRating(sign,themes,positioned,rules);
+  renderDailyRating(sign,themes,positioned,rules,aspects);
   $("theme-grid").innerHTML=themes.map(theme=>{
     const signals=rankSignalsForTheme({selectedSign:sign,positionedPlanets:positioned,theme,relationWeights:rules.relationWeights});
-    return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary})}</article>`;
+    return `<article class="theme-card"><h3>${theme.label}</h3>${buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign})}</article>`;
   }).join("");
-  $("reading").scrollIntoView({behavior:"smooth",block:"start"});
+  if(scroll)$("reading").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 async function main(){
-  const date=new Date();
+  let date=new Date();
   $("today-date").textContent=formatDate(date);
 
   const [signData,themeData,aspectData,rules,relationStatements,planetSigns,aspectLibrary,profiles,knowledge]=await Promise.all([
@@ -180,6 +204,8 @@ async function main(){
 
   const signs=signData.signs;
   let positioned=[],aspects=[],active=null;
+  let refreshingSky=false;
+  let skyDay=date.toDateString();
 
   const choose=id=>{
     if(!positioned.length)return;
@@ -191,20 +217,42 @@ async function main(){
 
   renderWheel(signs,choose,active);
 
-  try{
-    const sky=await calculateCurrentSky(date);
-    positioned=sky.positions.map(p=>({...p,sign:signForLongitude(p.longitude,signs)}));
-    aspects=detectAspects(positioned,aspectData.aspects);
-    $("engine-status").className="status ok";
-    $("engine-status").textContent=`Ephemeris ready · ${sky.engine} · ${sky.ephemeris} · source: ${sky.engineSource}`;
-    renderSky(positioned);
-    renderSharedAspects(aspects,aspectLibrary);
-    renderWheel(signs,choose,active);
-    window.addEventListener("resize",()=>renderWheel(signs,choose,active));
-  }catch(e){
-    console.error(e);
-    $("engine-status").className="status error";
-    $("engine-status").textContent="Ephemeris unavailable. No zodiac reading is generated until the calculation engine loads successfully.";
+  async function refreshSky(){
+    if(refreshingSky)return;
+    refreshingSky=true;
+    try{
+      const now=new Date();
+      const sky=await calculateCurrentSky(now);
+      date=now;
+      skyDay=now.toDateString();
+      $("today-date").textContent=formatDate(now);
+      positioned=sky.positions.map(p=>({...p,sign:signForLongitude(p.longitude,signs)}));
+      aspects=detectAspects(positioned,aspectData.aspects);
+      $("engine-status").className="status ok";
+      $("engine-status").textContent=`Ephemeris ready · ${sky.engine} · ${sky.ephemeris} · source: ${sky.engineSource}`;
+      renderSky(positioned);
+      renderSharedAspects(aspects,aspectLibrary);
+      renderWheel(signs,choose,active);
+      if(active){
+        const sign=signs.find(s=>s.id===active);
+        if(sign)renderReading({sign,themes:themeData.themes,positioned,aspects,rules,relationStatements,planetSigns,aspectLibrary,date,profiles,knowledge,scroll:false});
+      }
+    }catch(e){
+      console.error(e);
+      $("engine-status").className="status error";
+      $("engine-status").textContent="Ephemeris unavailable. No new reading is generated until the calculation engine loads successfully.";
+    }finally{
+      refreshingSky=false;
+    }
   }
+  await refreshSky();
+  window.addEventListener("resize",()=>renderWheel(signs,choose,active));
+  // Keep long-open tabs accurate across midnight; also refresh when returning.
+  setInterval(()=>{
+    if(!document.hidden&&new Date().toDateString()!==skyDay)refreshSky();
+  },60000);
+  document.addEventListener("visibilitychange",()=>{
+    if(!document.hidden)refreshSky();
+  });
 }
 main().catch(e=>{console.error(e);$("engine-status").className="status error";$("engine-status").textContent="Daily Zodiac could not initialize.";});
