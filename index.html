@@ -58,7 +58,7 @@
 
           <div class="method-note">
             <strong>How this reading is built</strong>
-            <p>Current planet positions come from the ephemeris. Planet-to-sign influence uses whole-sign relationships because no personal birth degree is collected. Planet-to-planet aspects use actual angular distance and configured orbs. Matching interpretation fragments are pulled from JSON.</p>
+            <p>Current planet positions come from the ephemeris. Planet-to-sign influence uses whole-sign relationships because no personal birth degree is collected. Planet-to-planet aspects use actual angular distance and configured orbs. Matching interpretation fragments are pulled from JSON. Aspect orb is the difference between the calculated angular separation and the exact aspect angle; aspects are shown only within their configured limits. Readings are interpretations of real astronomical configurations, not evidence that personal events will occur.</p>
           </div>
         </div>
       </details>
@@ -94,8 +94,14 @@
             <span class="rating-scale">1–5 stars</span>
           </div>
           <div id="daily-rating-grid" class="rating-grid"></div>
-          <p class="rating-note">A reflective indicator combining traditional whole-sign relationships with the strongest current planetary aspects. It may remain unchanged when influences are similar.</p>
+          <p class="rating-note">An interpretive 1–5 indicator, not a prediction or measured probability. It combines weighted whole-sign relationships (up to four planets) with up to three degree-based aspects, applying the configured orbs. Ratings may repeat while the sky's relevant relationships stay similar.</p>
+          <details class="method-note">
+            <summary>How are today's ratings calculated?</summary>
+            <p>Starting from 3 stars, the program combines a weighted average of the sign relationships (conjunction +0.2, sextile +0.65, trine +1, square −0.8, opposition −0.9, neutral 0) and the three closest configured aspects involving planets assigned to each theme (trine +1, sextile +0.7, conjunction +0.15, square −0.8, opposition −0.9), weighted by proximity to exactness. The score is rounded and limited to 1–5 stars. These weights are editorial interpretation rules, not scientifically validated outcomes.</p>
+            <div id="rating-method-details"></div>
+          </details>
         </section>
+        <p id="sign-daily-sky" class="muted"></p>
         <div id="theme-grid" class="theme-grid"></div>
       </div>
     </details>
