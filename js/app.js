@@ -83,7 +83,7 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
       const dailyChange=yesterday?Math.abs(yesterday.aspect.delta-item.aspect.delta):0;
       const fast=["moon","mercury","venus","mars","sun"].includes(item.planetA.id)||
                  ["moon","mercury","venus","mars","sun"].includes(item.planetB.id);
-      return {item,interpretation,score:relevant*1.5+item.exactness+Math.min(dailyChange,2)*.6+(fast?.8:0)};
+      return {item,interpretation,score:relevant*1.5+item.exactness+Math.min(dailyChange,2)*.6+(fast ? 0.8 : 0)};
     }).filter(x=>x.interpretation).sort((a,b)=>b.score-a.score);
   const top=candidates[0]?.item;
   if(!top)return base;
