@@ -88,8 +88,8 @@ function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,as
   const top=candidates[0]?.item;
   if(!top)return base;
   const interpretation=candidates[0].interpretation;
-  const signContext=`This aspect is shared by all signs. For ${sign.name}, the whole-sign placements below add the sign-level context; no individual birth chart is used.`;
-  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} in ${top.planetA.sign.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} in ${top.planetB.sign.name}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${interpretation} ${priorAspects?movementText(top,priorAspects):""} ${signContext}</p>`;
+
+  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} in ${top.planetA.sign.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} in ${top.planetB.sign.name}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${interpretation} ${priorAspects?movementText(top,priorAspects):""}</p>`;
   return highlight+base;
 }
 
