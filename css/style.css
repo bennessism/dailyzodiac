@@ -261,3 +261,22 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .daily-rating p,.rating-note,.footer p,.notice p,.status p{
   text-align:left;
 }
+
+
+/* Rating methodology is generated outside the theme cards. */
+.method-note > p,
+#rating-method-details > p{
+  text-align:justify;
+  text-justify:inter-word;
+  overflow-wrap:break-word;
+  hyphens:auto;
+  line-height:1.8;
+}
+.method-note > p{margin:14px 0 20px;}
+#rating-method-details > p{margin:0 0 18px;}
+#rating-method-details > p + p{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid rgba(216,174,77,.14);
+}
+#rating-method-details > p:last-child{margin-bottom:0;}
