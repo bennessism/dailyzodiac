@@ -242,3 +242,22 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
   width:100%;
   margin:0;
 }
+
+
+/* Long-form reading typography: justify prose, not UI labels or headings. */
+:where(.theme-card,.info-card,.profile-copy,.archetype-item,.aspect-row,.method-note,.shared-content) p{
+  text-align:justify;
+  text-justify:inter-word;
+  overflow-wrap:break-word;
+  hyphens:auto;
+}
+:where(.theme-card,.info-card,.profile-copy,.archetype-item,.aspect-row,.method-note,.shared-content) p + p{
+  margin-top:1em;
+}
+.info-card p + p,.archetype-item p + p,.aspect-row p + p{
+  margin-bottom:0;
+}
+/* Keep controls, numerical explanations, and concise status copy easy to scan. */
+.daily-rating p,.rating-note,.footer p,.notice p,.status p{
+  text-align:left;
+}
