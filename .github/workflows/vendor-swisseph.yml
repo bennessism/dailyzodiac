@@ -1,0 +1,41 @@
+name: Vendor Swiss Ephemeris
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/vendor-swisseph.yml'
+permissions:
+  contents: write
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download exact browser package and verify runtime assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p vendor/swisseph /tmp/swisseph-package
+          npm pack @swisseph/browser@1.4.0 --pack-destination /tmp/swisseph-package
+          tar -xzf /tmp/swisseph-package/swisseph-browser-1.4.0.tgz -C /tmp/swisseph-package
+          for file in swisseph-browser.js swisseph.js swisseph.wasm; do
+            test -s "/tmp/swisseph-package/package/dist/$file" || { echo "Missing package asset: $file"; exit 1; }
+          done
+          cp /tmp/swisseph-package/package/dist/swisseph-browser.js vendor/swisseph/index.js
+          cp /tmp/swisseph-package/package/dist/swisseph.js vendor/swisseph/swisseph.js
+          cp /tmp/swisseph-package/package/dist/swisseph.wasm vendor/swisseph/swisseph.wasm
+          printf 'Bundled from @swisseph/browser 1.4.0 (AGPL-3.0).\nSource: https://github.com/swisseph-js/swisseph\nSwiss Ephemeris copyright Astrodienst AG.\nSee root LICENSE and THIRD-PARTY-NOTICES.md.\n' > vendor/swisseph/NOTICE.txt
+      - name: Commit vendored runtime assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vendor/swisseph/
+          if ! git diff --cached --quiet; then
+            git commit -m "vendor: bundle Swiss Ephemeris browser runtime 1.4.0"
+            git push
+          fi
