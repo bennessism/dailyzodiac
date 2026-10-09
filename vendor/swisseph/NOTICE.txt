@@ -1,0 +1,4 @@
+Bundled from @swisseph/browser 1.4.0 (AGPL-3.0).
+Source: https://github.com/swisseph-js/swisseph
+Swiss Ephemeris copyright Astrodienst AG.
+See root LICENSE and THIRD-PARTY-NOTICES.md.
