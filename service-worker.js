@@ -1,4 +1,4 @@
-const CACHE = "dailyzodiac-v8";
+const CACHE = "dailyzodiac-v9";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,6 +6,9 @@ const APP_SHELL = [
   "./js/app.js",
   "./js/zodiac-engine.js",
   "./js/ephemeris.js",
+  "./vendor/swisseph/index.js",
+  "./vendor/swisseph/swisseph.js",
+  "./vendor/swisseph/swisseph.wasm",
   "./data/signs.json",
   "./data/themes.json",
   "./data/aspects.json",
