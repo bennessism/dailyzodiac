@@ -1,54 +1,15 @@
-const CACHE = "dailyzodiac-v9";
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./css/style.css",
-  "./js/app.js",
-  "./js/zodiac-engine.js",
-  "./js/ephemeris.js",
-  "./vendor/swisseph/index.js",
-  "./vendor/swisseph/swisseph.js",
-  "./vendor/swisseph/swisseph.wasm",
-  "./data/signs.json",
-  "./data/themes.json",
-  "./data/aspects.json",
-  "./data/daily-rules.json",
-  "./data/relation-statements.json",
-  "./data/planet-signs.json",
-  "./data/planet-aspects.json",
-  "./data/sign-profiles.json",
-  "./data/sign-knowledge.json",
-  "./manifest.webmanifest",
-  "./favicon-32x32.png",
-  "./apple-touch-icon.png",
-  "./icon-192.png",
-  "./icon-512.png"
-];
-
-self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_SHELL)));
-  self.skipWaiting();
-});
-
+// Installable online-only PWA. Never cache astrology code, data or app assets.
+// Retire this application's old service-worker caches without touching user storage.
+const LEGACY_PREFIX = "dailyzodiac-v";
+self.addEventListener("install", event => event.waitUntil(self.skipWaiting()));
 self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
-  );
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(names.filter(name => name.startsWith(LEGACY_PREFIX)).map(name => caches.delete(name)));
+    await self.clients.claim();
+  })());
 });
-
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      const network = fetch(event.request).then(response => {
-        if (response && (response.ok || response.type === "opaque")) {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, copy));
-        }
-        return response;
-      }).catch(() => cached);
-      return cached || network;
-    })
-  );
+  event.respondWith(fetch(event.request, { cache: "no-store" }));
 });
