@@ -13,7 +13,7 @@ const formatDate = d => new Intl.DateTimeFormat(undefined,{weekday:"long",year:"
 
 function renderWheel(signs,onSelect,active=null){
   const wheel=$("zodiac-wheel");
-  const radius=window.innerWidth<=680?132:176;
+  const radius=Math.max(0,wheel.getBoundingClientRect().width/2-(window.innerWidth<=680?52:50));
   wheel.innerHTML=signs.map((sign,i)=>{
     const a=(-90+i*30)*Math.PI/180;
     const x=Math.cos(a)*radius, y=Math.sin(a)*radius;
