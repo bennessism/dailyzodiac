@@ -145,7 +145,7 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 
 @media(max-width:680px){
   .site-header{padding-top:36px}.big-symbol{font-size:3rem}
-  .wheel-wrap{min-height:0;padding-block:20px}.zodiac-wheel{width:min(320px,100%);height:auto}.wheel-center{width:102px;height:102px}
+  .wheel-wrap{min-height:0;padding-top:38px;padding-bottom:20px}.zodiac-wheel{width:min(320px,100%);height:auto}.wheel-center{width:102px;height:102px}
   .sign-node{width:58px;height:58px}.sign-glyph{font-size:1.75rem}.sign-label{top:calc(50% + 28px);font-size:.65rem}
   
   .aspect-title{display:block}.aspect-meta{display:block;margin-top:4px}
