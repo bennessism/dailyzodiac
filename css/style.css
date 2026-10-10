@@ -78,9 +78,9 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 .method-note p{margin:6px 0 0;color:var(--muted)}
 
 .selector-panel{text-align:center}
-.wheel-wrap{position:relative;min-height:460px;display:grid;place-items:center;margin-top:12px}
+.wheel-wrap{position:relative;min-height:460px;min-width:0;width:100%;display:grid;place-items:center;margin-top:12px}
 .zodiac-wheel{
-  position:relative;width:420px;height:420px;max-width:100%;border-radius:50%;
+  position:relative;width:min(420px,100%);aspect-ratio:1/1;height:auto;min-width:0;border-radius:50%;
   background:
     radial-gradient(circle,rgba(216,174,77,.06) 0 34%,transparent 35%),
     radial-gradient(circle,transparent 0 49%,rgba(216,174,77,.13) 50%,transparent 51%),
@@ -145,7 +145,7 @@ h3{font-size:1.04rem;margin-bottom:10px;color:var(--gold2)}
 
 @media(max-width:680px){
   .site-header{padding-top:36px}.big-symbol{font-size:3rem}
-  .wheel-wrap{min-height:360px}.zodiac-wheel{width:320px;height:320px}.wheel-center{width:102px;height:102px}
+  .wheel-wrap{min-height:0;padding-block:20px}.zodiac-wheel{width:min(320px,100%);height:auto}.wheel-center{width:102px;height:102px}
   .sign-node{width:58px;height:58px}.sign-glyph{font-size:1.75rem}.sign-label{top:calc(50% + 28px);font-size:.65rem}
   
   .aspect-title{display:block}.aspect-meta{display:block;margin-top:4px}
