@@ -36,7 +36,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 const topic=p=>PLANETS[p.id]||{topic:p.name.toLowerCase(),verb:"act thoughtfully",care:"excess"};
 function placement(p,theme){
  const planet=topic(p),sign=SIGNS[p.sign.id]||{quality:"distinctive",strength:"using its strengths",shadow:"excess"};
- return `${p.name} in ${p.sign.name} brings ${planet.topic} into a ${sign.quality} style. This favors ${sign.strength} in ${THEMES[theme]?.place||"daily life"}, while ${sign.shadow} and ${planet.care} deserve attention.`;
+ return `${p.name} in ${p.sign.name} brings ${planet.topic} into a ${sign.quality} style. This favors ${sign.strength} in ${THEMES[theme]?.focus||"daily life"}, while ${sign.shadow} and ${planet.care} deserve attention.`;
 }
 function aspect(p,theme){
  const a=topic(p.planetA),b=topic(p.planetB),s1=SIGNS[p.planetA.sign.id],s2=SIGNS[p.planetB.sign.id],rule=ASPECT[p.aspect.id];
