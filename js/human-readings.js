@@ -15,14 +15,14 @@ const SIGNS={
 aries:{quality:"direct and pioneering",strength:"taking initiative",shadow:"rushing"},taurus:{quality:"steady and practical",strength:"building security",shadow:"resisting change"},gemini:{quality:"curious and adaptable",strength:"sharing ideas",shadow:"scattered attention"},cancer:{quality:"protective and feeling-led",strength:"offering care",shadow:"overprotectiveness"},leo:{quality:"expressive and proud",strength:"creative confidence",shadow:"pride"},virgo:{quality:"observant and methodical",strength:"refining details",shadow:"overanalysis"},libra:{quality:"cooperative and fairness-minded",strength:"finding balance",shadow:"indecision"},scorpio:{quality:"intense and discerning",strength:"investigating what matters",shadow:"suspicion or control"},sagittarius:{quality:"exploratory and candid",strength:"seeing possibilities",shadow:"overstatement"},capricorn:{quality:"disciplined and strategic",strength:"building lasting results",shadow:"rigidity"},aquarius:{quality:"independent and unconventional",strength:"thinking differently",shadow:"detachment"},pisces:{quality:"empathetic and imaginative",strength:"understanding nuance",shadow:"blurred boundaries"}
 };
 const THEMES={
-overall:{place:"today's priorities",action:"Choose the response that serves your wider priorities, not just the loudest impulse."},
-love:{place:"relationships",action:"Say what you need and leave space for the other person's perspective."},
-work:{place:"work and responsibilities",action:"Make progress through clear priorities and practical follow-through."},
-money:{place:"spending and commitments",action:"Consider the longer-term cost before treating a desire as a necessity."},
-communication:{place:"conversations",action:"Clarify what was meant before reacting to what was heard."},
-social:{place:"friendships and group situations",action:"Make room for differences without losing your own voice."},
-energy:{place:"energy and motivation",action:"Pace your efforts so enthusiasm leads to something useful."},
-advice:{place:"today's focus",action:"Give attention to what you can influence directly."}
+ overall:{focus:"the day's overall direction",tension:"Balance what matters emotionally against the urge to act or prove a point.",support:"Use cooperation between the planets to settle priorities and move forward deliberately.",placement:"Notice where this planet's usual concerns shape the day's choices."},
+ love:{focus:"affection, trust and close relationships",tension:"Intensity or pride can make affection feel like a contest; explain what you need without testing another person's loyalty.",support:"Make space for mutual affection and give the other person room to express a different need.",placement:"Pay attention to the difference between genuine closeness and unspoken expectations."},
+ work:{focus:"work, responsibilities and professional decisions",tension:"A strong impulse to push ahead can conflict with cooperation at work; agree on responsibilities before making demands.",support:"Use the shared momentum to coordinate work and turn ideas into a practical next step.",placement:"Apply this planet's strengths to a concrete task while keeping colleagues' expectations in view."},
+ money:{focus:"purchases, resources and financial judgment",tension:"Desire and urgency can pull financial choices in different directions; compare the immediate appeal with the practical cost.",support:"Align preferences with available resources and consider what will still be worthwhile later.",placement:"Review the reasons behind a financial choice instead of relying only on confidence or caution."},
+ communication:{focus:"what is said, heard and understood",tension:"A firm opinion or sensitive subject may make ordinary words sound sharper; ask one clear question before defending a position.",support:"Use the opening for a frank conversation that makes assumptions and expectations clearer.",placement:"Choose words that express the point without losing the listener."},
+ social:{focus:"friendships and group dynamics",tension:"Different personalities may compete for attention or control; give others room instead of turning a social difference into a contest.",support:"Bring people together around a common interest and welcome different contributions.",placement:"Notice whether the social atmosphere calls for initiative, tact or a little more space."},
+ energy:{focus:"drive, stamina and the pace of action",tension:"A burst of motivation can meet emotional resistance or competing demands; pace yourself rather than pushing at full speed.",support:"Put the available momentum into one useful activity rather than scattering it.",placement:"Use motivation thoughtfully and notice when it is time to slow down."},
+ advice:{focus:"the most useful priority today",tension:"Do not let a passing urge settle a decision that needs reflection; identify the one issue worth addressing first.",support:"Choose one constructive step that makes the most of today's cooperative tendency.",placement:"Identify one manageable step instead of trying to solve everything at once."}
 };
 const ASPECT={
 conjunction:{meaning:"brings these concerns together",direction:"The same choice may involve both needs at once."},
@@ -41,7 +41,10 @@ function placement(p,theme){
 function aspect(p,theme){
  const a=topic(p.planetA),b=topic(p.planetB),s1=SIGNS[p.planetA.sign.id],s2=SIGNS[p.planetB.sign.id],rule=ASPECT[p.aspect.id];
  if(!rule)return "";
- return `${p.planetA.name} in ${p.planetA.sign.name} emphasizes ${a.topic}; ${p.planetB.name} in ${p.planetB.sign.name} emphasizes ${b.topic}. Their ${p.aspect.label.toLowerCase()} ${rule.meaning}. ${s1&&s2?`${p.planetA.sign.name}'s ${s1.quality} approach meets ${p.planetB.sign.name}'s ${s2.quality} approach. `:""}${rule.direction} In ${THEMES[theme]?.place||"daily life"}, ${THEMES[theme]?.action||"Act with consideration."}`;
+ const t=THEMES[theme]||THEMES.overall;
+ const challenging=["square","opposition"].includes(p.aspect.id);
+ const body=challenging?t.tension:t.support;
+ return `In ${t.focus}, ${p.planetA.name} in ${p.planetA.sign.name} brings ${a.topic}, while ${p.planetB.name} in ${p.planetB.sign.name} emphasizes ${b.topic}. Their ${p.aspect.label.toLowerCase()} ${rule.meaning}. ${s1&&s2?`${p.planetA.sign.name}'s ${s1.quality} manner meets ${p.planetB.sign.name}'s ${s2.quality} manner. `:""}${body}`;
 }
 function movement(p,prior){
  if(!prior)return "";
@@ -54,26 +57,24 @@ function movement(p,prior){
  return "Its orb has changed little since yesterday's matching clock time.";
 }
 export function humanTheme({theme,signals,aspects,priorAspects,selectedSign}){
- const relevant=aspects.filter(a=>theme.planets.includes(a.planetA.id)||theme.planets.includes(a.planetB.id)).map(a=>{
-  const n=(theme.planets.includes(a.planetA.id)?1:0)+(theme.planets.includes(a.planetB.id)?1:0);
-  const quick=["moon","mercury","venus","mars","sun"].includes(a.planetA.id)||["moon","mercury","venus","mars","sun"].includes(a.planetB.id);
-  return {a,score:n*1.5+a.exactness+(quick?.8:0)};
- }).sort((x,y)=>y.score-x.score);
- const top=relevant[0]?.a;
  const selected=signals.filter(s=>s.relation!=="neutral");
- // One meaningful placement rather than up to three separate paragraphs that restate sign qualities.
- const lead=selected.find(s=>top&&(s.id===top.planetA.id||s.id===top.planetB.id))||selected[0];
+ const candidates=aspects.filter(a=>theme.planets.includes(a.planetA.id)||theme.planets.includes(a.planetB.id)).map(a=>{
+  const relevant=(theme.planets.includes(a.planetA.id)?1:0)+(theme.planets.includes(a.planetB.id)?1:0);
+  const quick=["moon","mercury","venus","mars","sun"].includes(a.planetA.id)||["moon","mercury","venus","mars","sun"].includes(a.planetB.id);
+  return {a,score:relevant*1.5+a.exactness+(quick?0.8:0)};
+ }).sort((x,y)=>y.score-x.score);
+ const top=candidates[0]?.a;
+ const lead=selected.find(s=>!top||!(s.id===top.planetA.id||s.id===top.planetB.id))||selected[0];
  const chunks=[];
  if(top){
   chunks.push(`<p class="daily-aspect"><strong>Current sky influence · ${esc(top.planetA.name)} in ${esc(top.planetA.sign.name)} ${esc(top.aspect.label.toLowerCase())} ${esc(top.planetB.name)} in ${esc(top.planetB.sign.name)}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${esc(aspect(top,theme.id))} ${esc(movement(top,priorAspects))}</p>`);
  }
  if(lead){
-  const rel=lead.relation;
-  // Avoid repeating the leading aspect's sign qualities as a second independent explanation.
+  const t=THEMES[theme.id]||THEMES.overall;
   if(!top||!(lead.id===top.planetA.id||lead.id===top.planetB.id)){
-   chunks.push(`<p><strong>${esc(lead.name)} in ${esc(lead.sign.name)} · ${esc(rel)}</strong> ${esc(placement(lead,theme.id))} This placement has a ${REL[rel]||"distinct"} whole-sign relationship to ${selectedSign.name}.</p>`);
-  }else{
-   chunks.push(`<p>${esc(lead.name)} in ${esc(lead.sign.name)} has a ${REL[rel]||"distinct"} whole-sign relationship to ${selectedSign.name}; keep that sign-specific context in mind when considering the aspect above.</p>`);
+    chunks.push(`<p><strong>${esc(lead.name)} in ${esc(lead.sign.name)} · ${esc(lead.relation)}</strong> ${esc(placement(lead,theme.id))} ${esc(t.placement)} Its whole-sign relationship to ${esc(selectedSign.name)} is ${esc(lead.relation)}.</p>`);
+  }else if(!top){
+    chunks.push(`<p>${esc(lead.name)} in ${esc(lead.sign.name)} makes ${esc(theme.label.toLowerCase())} worth considering through its ${esc(lead.relation)} relationship to ${esc(selectedSign.name)}.</p>`);
   }
  }else if(!top){chunks.push("<p>No major configured whole-sign influence or current aspect stands out for this theme.</p>");}
  return chunks.join("");
