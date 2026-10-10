@@ -1,3 +1,4 @@
+import { humanTheme } from "./human-readings.js";
 import { calculateCurrentSky } from "./ephemeris.js";
 import { signForLongitude, detectAspects, rankSignalsForTheme, formatDegree } from "./zodiac-engine.js";
 
@@ -65,32 +66,8 @@ function movementText(item,prior){
   return "Its orb is nearly unchanged since the same time yesterday.";
 }
 
-function buildThemeText({theme,signals,relationStatements,planetSigns,aspects,aspectLibrary,sign,priorAspects}){
-  const parts=[];
-  for(const signal of signals.filter(s=>s.relation!=="neutral").slice(0,3)){
-    const placement=planetSigns.entries?.[`${signal.id}_${signal.sign.id}`];
-    const ptxt=placement?.[theme.id]||placement?.overall||"";
-    if(ptxt) parts.push(`<p><strong>${signal.name} in ${signal.sign.name} · ${titleCase(signal.relation)}</strong>${ptxt}</p>`);
-  }
-  const base=parts.length?parts.join(""):"<p>No major configured whole-sign signal dominates this theme right now.</p>";
-  // Aspect changes depend on exact planetary degrees. Prefer fast-changing Moon
-  // connections and aspects involving planets assigned to this reading theme.
-  const candidates=aspects.filter(item=>theme.planets.includes(item.planetA.id)||theme.planets.includes(item.planetB.id))
-    .map(item=>{
-      const interpretation=aspectInterpretation(item,theme.id,aspectLibrary);
-      const relevant=(theme.planets.includes(item.planetA.id)?1:0)+(theme.planets.includes(item.planetB.id)?1:0);
-      const yesterday=priorAspects?.get(aspectKey(item));
-      const dailyChange=yesterday?Math.abs(yesterday.aspect.delta-item.aspect.delta):0;
-      const fast=["moon","mercury","venus","mars","sun"].includes(item.planetA.id)||
-                 ["moon","mercury","venus","mars","sun"].includes(item.planetB.id);
-      return {item,interpretation,score:relevant*1.5+item.exactness+Math.min(dailyChange,2)*.6+(fast ? 0.8 : 0)};
-    }).filter(x=>x.interpretation).sort((a,b)=>b.score-a.score);
-  const top=candidates[0]?.item;
-  if(!top)return base;
-  const interpretation=candidates[0].interpretation;
-
-  const highlight=`<p class="daily-aspect"><strong>Current sky influence · ${top.planetA.name} in ${top.planetA.sign.name} ${top.aspect.label.toLowerCase()} ${top.planetB.name} in ${top.planetB.sign.name}</strong><span class="muted">Exact aspect angle: ${top.aspect.angle}° · current separation: ${top.separation.toFixed(2)}° · orb: ${top.aspect.delta.toFixed(2)}° (allowed ${top.aspect.orb}°)</span> ${interpretation} ${priorAspects?movementText(top,priorAspects):""}</p>`;
-  return highlight+base;
+function buildThemeText({theme,signals,aspects,sign,priorAspects}){
+  return humanTheme({theme,signals,aspects,selectedSign:sign,priorAspects});
 }
 
 function dailyRating(sign,themes,positioned,rules,aspects){
